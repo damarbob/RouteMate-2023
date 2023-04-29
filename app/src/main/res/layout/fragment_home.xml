@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="0dp"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp"
+    android:clipToPadding="false"
+    tools:context=".ui.fragment.HomeFragment">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonHomeMenu"
+        style="@style/Widget.App.Button.IconOnly.Small"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="16dp"
+        android:visibility="gone"
+        app:icon="@drawable/ic_app_menu" />
+
+    <TextView
+        android:id="@+id/textHomeGreet"
+        style="@style/Widget.App.Text.Content.Title"
+        android:layout_alignBottom="@+id/buttonHomeOptions"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_toEndOf="@+id/buttonHomeMenu"
+        android:gravity="center_vertical"
+        android:text="Hello, User!" />
+
+    <!--<TextView
+        android:id="@+id/textHomeSub"
+        style="@style/Widget.App.Text.Content.Small"
+        android:layout_below="@+id/textHomeGreet"
+        android:text="Get started with the following options" />-->
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonHomeOptions"
+        style="@style/Widget.App.Button.IconOnly.Small"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        app:icon="@drawable/ic_app_more_vert" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvHomeMainMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonHomeOptions"
+        android:layout_marginTop="8dp"
+        android:clipToPadding="false"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="16dp" />
+
+</RelativeLayout>

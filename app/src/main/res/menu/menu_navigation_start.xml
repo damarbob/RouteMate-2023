@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/settings_item"
+        android:icon="@drawable/ic_app_settings"
+        android:title="Settings" />
+
+    <item
+        android:id="@+id/about_item"
+        android:icon="@drawable/ic_app_info"
+        android:title="About" />
+
+    <item
+        android:id="@+id/policy_item"
+        android:icon="@drawable/ic_app_policy"
+        android:title="Policy" />
+
+<!--    <item-->
+<!--        android:title="Other">-->
+<!--        <menu>-->
+<!--            <item-->
+<!--                android:id="@+id/exit_item"-->
+<!--                android:icon="@drawable/ic_app_exit_to_app"-->
+<!--                android:title="Exit" />-->
+<!--        </menu>-->
+<!--    </item>-->
+</menu>

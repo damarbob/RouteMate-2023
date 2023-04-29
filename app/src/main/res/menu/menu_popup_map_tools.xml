@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/marker_toggle_lock_item"
+        android:icon="@drawable/ic_app_lock"
+        android:title="Toggle Marker Lock" />
+    <item android:id="@+id/marker_toggle_info_item"
+        android:icon="@drawable/ic_app_remove_red_eye"
+        android:title="Toggle Marker Info" />
+</menu>

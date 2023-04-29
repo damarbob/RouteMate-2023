@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    style="@style/Widget.App.Card.Outline"
+    app:cardCornerRadius="8dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/textName"
+            style="@style/Widget.App.Text.Content.Small.Bold"
+            android:text="Location 0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textDescription"
+            android:visibility="gone"
+            style="@style/Widget.App.Text.Content.Small.Italic"
+            android:layout_width="150dp"
+            android:text="Destinations' about will be displayed here."
+            app:layout_constraintStart_toStartOf="@+id/textName"
+            app:layout_constraintTop_toBottomOf="@+id/textName" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

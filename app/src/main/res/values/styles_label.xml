@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.App.Label.Small" parent="Widget.App.Text.Content.Small">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
+    <style name="Widget.App.Label.Small.Text.Content" parent="Widget.App.Text.Content.Small">
+        <item name="android:textColor">@android:color/tertiary_text_light</item>
+        <item name="android:layout_marginTop">0dp</item>
+    </style>
+
+    <style name="Widget.App.Label.Small.Opaque.Text.Content.Bold.Green" parent="Widget.App.Text.Content.Small.Bold">
+        <item name="android:textColor">@android:color/holo_green_dark</item>
+        <item name="android:layout_marginTop">0dp</item>
+    </style>
+
+    <style name="Widget.App.Label.Small.Opaque.Image.Content.Green" parent="Widget.App.ImageView">
+        <item name="android:layout_width">14sp</item>
+        <item name="android:layout_height">14sp</item>
+        <item name="tint">@android:color/holo_green_dark</item>
+    </style>
+
+    <style name="Widget.App.Label.Small.Opaque" parent="Widget.App.Text.Content.Small">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:background">@drawable/bg_rectangle_rounded</item>
+        <item name="android:backgroundTint">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.App.Label.Small.Opaque.Text.Content" parent="Widget.App.Text.Content.Small">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:layout_marginTop">0dp</item>
+    </style>
+
+    <style name="Widget.App.Label.Small.Opaque.Text.Content.Bold" parent="Widget.App.Text.Content.Small.Bold">
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:layout_marginTop">0dp</item>
+    </style>
+
+    <style name="Widget.App.Label.Small.Opaque.Image.Content" parent="Widget.App.ImageView">
+        <item name="android:layout_width">14sp</item>
+        <item name="android:layout_height">14sp</item>
+        <item name="tint">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="Widget.App.Label.Small.Gray" parent="Widget.App.Text.Content.Small">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:background">@drawable/bg_rectangle_rounded</item>
+        <item name="android:strokeColor">?attr/colorPrimary</item>
+        <item name="android:backgroundTint">?attr/colorPrimaryContainer</item>
+    </style>
+
+    <style name="Widget.App.Label.Small.Gray.Text.Content" parent="Widget.App.Text.Content.Small">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:layout_marginTop">0dp</item>
+    </style>
+
+<!--    Following disabled tonal button's text color & alpha-->
+    <style name="Widget.App.Label.Small.Gray.Text.Content.Bold" parent="Widget.App.Text.Content.Small.Bold">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:alpha">0.38</item>
+        <item name="android:layout_marginTop">0dp</item>
+    </style>
+
+    <!--    Following disabled tonal button's text color & alpha-->
+    <style name="Widget.App.Label.Small.Gray.Image.Content" parent="Widget.App.ImageView">
+        <item name="android:layout_width">14sp</item>
+        <item name="android:layout_height">14sp</item>
+        <item name="android:alpha">0.38</item>
+        <item name="tint">?attr/colorOnSurface</item>
+    </style>
+
+</resources>

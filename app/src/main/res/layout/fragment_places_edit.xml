@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonPlacesBack"
+            style="@style/Widget.App.Button.IconButton"
+            app:icon="@drawable/ic_app_arrow_back_ios_new" />
+
+        <TextView
+            android:id="@+id/textOptimizationTitle"
+            style="@style/Widget.App.Text.Title"
+            android:layout_marginStart="16dp"
+            android:text="Edit Location" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <HorizontalScrollView
+                android:id="@+id/layoutPlacesScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layoutPlacesTitle"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:layout_toStartOf="@+id/buttonPlacesOptions"
+                android:scrollbarSize="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutY"
+                        style="@style/Widget.App.Dialog.TextInputLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:hint="Latitude"
+                        app:startIconDrawable="@drawable/ic_app_arrow_forward">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextLatitude"
+                            style="@style/Widget.App.TextInputEditText"
+                            android:layout_width="wrap_content"
+                            android:gravity="top|start"
+                            android:imeActionId="666"
+                            android:imeActionLabel="Some Label"
+                            android:inputType="numberDecimal"
+                            android:minWidth="175dp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/textInputLayoutZ"
+                        style="@style/Widget.App.Dialog.TextInputLayout"
+                        android:layout_width="wrap_content"
+                        android:hint="Longitude"
+                        app:startIconDrawable="@drawable/ic_app_arrow_downward">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/editTextLongitude"
+                            style="@style/Widget.App.TextInputEditText"
+                            android:layout_width="wrap_content"
+                            android:gravity="top|start"
+                            android:imeActionId="666"
+                            android:imeActionLabel="Some Label"
+                            android:inputType="numberDecimal"
+                            android:minWidth="175dp" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout3"
+                style="@style/Widget.App.Dialog.TextInputLayout"
+                android:hint="Name"
+                app:startIconDrawable="@drawable/ic_app_location_on">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPlacesName"
+                    style="@style/Widget.App.TextInputEditText"
+                    android:imeActionId="666"
+                    android:imeActionLabel="Some Label" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                style="@style/Widget.App.Dialog.TextInputLayout"
+                android:hint="Description"
+                app:startIconDrawable="@drawable/ic_app_info">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPlacesDescription"
+                    style="@style/Widget.App.TextInputEditText"
+                    android:imeActionId="666"
+                    android:imeActionLabel="Some Label" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutX"
+                style="@style/Widget.App.Dialog.TextInputLayout"
+                android:hint="Note"
+                app:startIconDrawable="@drawable/ic_app_sticky_note_2">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextPlacesNote"
+                    style="@style/Widget.App.TextInputEditText"
+                    android:gravity="top|start"
+                    android:imeActionId="666"
+                    android:imeActionLabel="Some Label"
+                    android:inputType="textMultiLine"
+                    android:maxLines="5" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
+                style="@style/Widget.App.Dialog.TextInputLayout.ExposedDropdownMenu"
+                android:hint="Location Profile"
+                app:startIconDrawable="@drawable/ic_app_edit_location">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autocompletePlacesProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Destination" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonPlacesSave"
+                style="@style/Widget.App.Button.Wide"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="8dp"
+                android:text="Save"
+                app:icon="@drawable/ic_app_save" />
+
+            <LinearLayout
+                android:id="@+id/layoutPlacesAdditionalProFeature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textViewY"
+                    style="@style/Widget.App.Text.Title"
+                    android:layout_marginTop="16dp"
+                    android:text="Constraints" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@style/Widget.App.Text.Content.Small"
+                    android:text="Set location-specific constraints" />
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/checkBoxPlacesDemandConstraint"
+                    style="@style/Widget.App.CheckBox"
+                    android:layout_marginTop="8dp"
+                    android:text="Add demand constraint" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutDemands"
+                    style="@style/Widget.App.Dialog.TextInputLayout"
+                    android:hint="Demand"
+                    app:startIconDrawable="@drawable/ic_app_widgets"
+                    app:suffixText="units">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextPlacesDemands"
+                        style="@style/Widget.App.TextInputEditText"
+                        android:imeActionId="666"
+                        android:imeActionLabel="Some Label"
+                        android:inputType="numberDecimal" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

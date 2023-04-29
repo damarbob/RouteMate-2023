@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutDistances"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardDistancesOverview"
+        style="@style/Widget.App.Card.Overview"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/cardDistancesOverviewLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonDistancesOptions"
+                style="@style/Widget.App.Button.IconOnly.Small"
+                android:layout_alignParentEnd="true"
+                app:icon="@drawable/ic_app_more_vert" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/buttonDistancesOptions"
+                android:layout_alignBottom="@+id/buttonDistancesOptions"
+                android:layout_toStartOf="@+id/buttonDistancesOptions">
+
+                <LinearLayout
+                    android:id="@+id/layoutDistancesTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/textDistancesTitle"
+                        style="@style/Widget.App.Text.Title"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="16dp"
+                        android:text="Matrix"
+                        android:visibility="gone"/>
+
+                    <LinearLayout
+                        style="@style/Widget.App.Label.Small.Opaque"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/imageDistancesStatusDone"
+                            style="@style/Widget.App.Label.Small.Opaque.Image.Content"
+                            android:src="@drawable/ic_app_check_circle" />
+
+                        <ImageView
+                            android:id="@+id/imageDistancesStatusError"
+                            style="@style/Widget.App.Label.Small.Opaque.Image.Content"
+                            android:src="@drawable/ic_app_warning_amber" />
+
+
+                        <TextView
+                            android:id="@+id/textDistancesStatus"
+                            style="@style/Widget.App.Label.Small.Opaque.Text.Content.Bold"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:text="Done" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        style="@style/Widget.App.Label.Small.Gray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/Widget.App.Label.Small.Gray.Image.Content"
+                            android:src="@drawable/ic_app_device_hub" />
+
+                        <TextView
+                            android:id="@+id/textDistancesNumber"
+                            style="@style/Widget.App.Label.Small.Gray.Text.Content.Bold"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:text="24 elements" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <HorizontalScrollView
+                android:id="@+id/layoutOptimizationScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="8dp"
+                android:layout_toStartOf="@+id/buttonDistancesOptions"
+                android:scrollbarSize="1dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <!--<Button
+        android:id="@+id/buttonDistancesResolveMatrix"
+        style="@style/Widget.App.Button"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="Resolve Matrix"
+        app:icon="@drawable/ic_app_device_hub" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDistancesList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

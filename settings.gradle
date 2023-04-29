@@ -1,0 +1,42 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootDir.toPath().resolve("local.properties").toFile()
+if (localPropertiesFile.exists()) {
+    localProperties.load(new FileInputStream(localPropertiesFile))
+}
+
+def mapboxAccessToken = localProperties.getProperty("mapboxAccessToken")
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven {
+            url "https://repository.jboss.org/nexus/content/groups/public/"
+        }
+        maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://api.mapbox.com/downloads/v2/releases/maven'
+            authentication {
+                basic(BasicAuthentication)
+            }
+            credentials {
+                // Do not change the username below.
+                // This should always be `mapbox` (not your username).
+                username = 'mapbox'
+                // Use the secret token you stored in gradle.properties as the password
+                password = mapboxAccessToken
+            }
+        }
+    }
+}
+rootProject.name = "RouteMate"
+include ':app'

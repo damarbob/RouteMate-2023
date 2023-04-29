@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.dialog.OptimizationFilterFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textOptimizationTitle"
+            style="@style/Widget.App.Text.Title"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:text="Filter Result" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            style="@style/Widget.App.Dialog.TextInputLayout.ExposedDropdownMenu"
+            android:layout_marginBottom="8dp"
+            android:hint="Vehicle"
+            app:startIconDrawable="@drawable/ic_app_directions_car">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/autocompleteOptimizationVehiclesList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none"
+                android:text="All vehicles" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout2"
+            style="@style/Widget.App.Dialog.TextInputLayout.ExposedDropdownMenu"
+            android:hint="Route"
+            app:startIconDrawable="@drawable/ic_app_route">
+
+            <AutoCompleteTextView
+                android:id="@+id/autocompleteOptimizationTripsList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:text="All trips" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonOptimizationFilterAppy"
+            style="@style/Widget.App.Button"
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            android:text="Apply"
+            app:icon="@drawable/ic_app_filter_list" />
+
+    </LinearLayout>
+
+</FrameLayout>

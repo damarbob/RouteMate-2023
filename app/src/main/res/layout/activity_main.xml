@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentMainActivity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/subParent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/mapsFragmentContainer"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="false"
+            app:layout_anchor="@id/incBottomSheetMain"
+            app:navGraph="@navigation/maps_nav_graph" />
+
+        <ImageView
+            android:id="@+id/mapCrossHair"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:alpha="0.25"
+            android:contentDescription="Crosshair"
+            android:padding="32dp"
+            android:visibility="invisible"
+            app:layout_anchor="@id/mapsFragmentContainer"
+            app:layout_anchorGravity="center"
+            app:srcCompat="@drawable/ic_app_panorama_fish_eye"
+            app:tint="#000000" />
+
+        <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
+        <!--        <androidx.core.widget.NestedScrollView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            app:layout_behavior="@string/searchbar_scrolling_view_behavior">-->
+        <!--            &lt;!&ndash; Screen content goes here. &ndash;&gt;-->
+        <!--        </androidx.core.widget.NestedScrollView>-->
+
+        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--            android:id="@+id/fabMainTools"-->
+        <!--            style="@style/Widget.App.FAB.BottomSheet.Primary"-->
+        <!--            android:translationX="8dp"-->
+        <!--            android:src="@drawable/ic_app_more_vert"-->
+        <!--            app:layout_anchorGravity="top|Start" />-->
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabMainStartNavigationView"
+            style="@style/Widget.App.FAB.Primary"
+            android:src="@drawable/ic_app_menu"
+            android:translationX="8dp"
+            android:translationY="16dp"
+            android:translationZ="-8dp"
+            android:visibility="gone"
+            app:layout_anchorGravity="top|start" />
+
+        <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+        <!--            android:id="@+id/fabMainTrafficStyle"-->
+        <!--            style="@style/Widget.App.FAB.BottomSheet.Primary"-->
+        <!--            android:src="@drawable/ic_app_directions_car"-->
+        <!--            android:translationX="8dp"-->
+        <!--            android:translationZ="8dp"-->
+        <!--            app:layout_anchorGravity="top|start" />-->
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fabMainDraw"
+            style="?attr/materialIconButtonFilledStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:padding="16dp"
+            android:translationX="-8dp"
+            android:translationY="-40dp"
+            android:translationZ="2dp"
+            app:icon="@drawable/ic_app_create"
+            app:layout_anchor="@id/incBottomSheetMain"
+            app:layout_anchorGravity="top|end"
+            app:toggleCheckedStateOnClick="true" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fabMainTrafficStyle"
+            style="?attr/materialIconButtonFilledStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:padding="16dp"
+            android:translationX="8dp"
+            android:translationY="-40dp"
+            android:translationZ="2dp"
+            app:icon="@drawable/ic_app_directions_car"
+            app:layout_anchor="@id/incBottomSheetMain"
+            app:layout_anchorGravity="top|start"
+            app:toggleCheckedStateOnClick="true" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fabMainMarkerInfo"
+            style="?attr/materialIconButtonFilledStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:translationX="120dp"
+            android:translationY="-40dp"
+            android:translationZ="2dp"
+            app:icon="@drawable/ic_app_remove_red_eye"
+            app:layout_anchor="@id/incBottomSheetMain"
+            app:layout_anchorGravity="top|start"
+            app:toggleCheckedStateOnClick="true" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fabMainMarkerLock"
+            style="?attr/materialIconButtonFilledStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:translationX="72dp"
+            android:translationY="-40dp"
+            android:translationZ="2dp"
+            app:icon="@drawable/ic_app_lock"
+            app:layout_anchor="@id/incBottomSheetMain"
+            app:layout_anchorGravity="top|start"
+            app:toggleCheckedStateOnClick="true" />
+
+<!--        <include-->
+<!--            android:id="@+id/barMainTools"-->
+<!--            layout="@layout/bar_main_tools" />-->
+
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/fabMainDraw"-->
+<!--            style="@style/Widget.App.FAB.BottomSheet.Primary"-->
+<!--            android:src="@drawable/ic_app_create"-->
+<!--            android:translationX="-8dp"-->
+<!--            android:translationZ="8dp"-->
+<!--            android:visibility="gone"-->
+<!--            app:layout_anchorGravity="top|end" />-->
+
+        <include
+            android:id="@+id/incBottomSheetMain"
+            layout="@layout/sheet_bottom_main" />
+
+        <com.google.android.material.search.SearchView
+            android:id="@+id/searchViewPlaces"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Search here"
+            android:visibility="visible"
+            app:layout_anchor="@id/searchBarPlaces"
+            app:useDrawerArrowDrawable="true">
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progressIndicatorSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMainSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:paddingBottom="16dp" />
+
+        </com.google.android.material.search.SearchView>
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:expanded="true"
+            app:liftOnScroll="false">
+
+            <com.google.android.material.search.SearchBar
+                android:id="@+id/searchBarPlaces"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:hint="Search here"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|snap|snapMargins"
+                app:navigationIcon="@drawable/ic_app_menu"/>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/startNavigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/menu_navigation_start" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

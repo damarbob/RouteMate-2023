@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/distances_symmetrize"
+        android:icon="@drawable/ic_app_flip"
+        android:title="Symmetrize Matrix"
+        android:visible="false"/>
+    <item android:id="@+id/distances_calculate_matrix"
+        android:icon="@drawable/ic_app_123"
+        android:title="Calculate Distance Matrix" />
+    <item android:id="@+id/distances_calculate_matrix_mapbox"
+        android:icon="@drawable/ic_app_123"
+        android:title="Calculate Distance Matrix (Mapbox)" />
+    <item android:id="@+id/distances_calculate_saving"
+        android:icon="@drawable/ic_app_123"
+        android:title="Calculate Saving Distance" />
+    <item android:id="@+id/distances_use_sample_data"
+        android:icon="@drawable/ic_app_build"
+        android:title="Use Sample Data" />
+    <item android:id="@+id/distances_clear_matrix"
+        android:icon="@drawable/ic_app_clear"
+        android:title="Clear Matrix" />
+    <item android:id="@+id/distances_show_hint"
+        android:icon="@drawable/ic_app_info"
+        android:title="Show Hint" />
+</menu>

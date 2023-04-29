@@ -1,0 +1,87 @@
+<resources>
+    <string name="dev_name">DSM</string>
+    <string name="app_name">RouteMate</string>
+    <string name="about_dialog_message">
+        ${app_name} v0.5 Beta 2023
+        \n\${app_name} is an open-source all-in-one solution for any route optimization problems.
+        \n\n© ${dev_name} 2023
+    </string>
+    <string name="version_info_dialog_message">
+        ${app_name} is in Beta version and currently under development. Please regularly get the latest version as soon as it\'s available.
+        \n\nThis version of ${app_name} does not include local data saving, this feature will be implemented soon. For now, please consider signing in to allow cloud data saving instead. This feature requires internet.
+        \n\nData is encrypted in transit. Please do not worry about the data safety.
+        \n\nBug report: routemate@dsm.my.id
+    </string>
+    <string name="app_url">https://dsm.my.id/routemate/</string>
+
+    <string name="app_tc_url">https://dsm.my.id/routemate/tc/</string>
+    <string name="login_tc_agreement">By logging in, you agree with <a href='https://dsm.my.id/routemate/tc/'>Terms and Conditions</a></string>
+    <string name="register_tc_agreement">By registering, you agree with <a href='https://dsm.my.id/routemate/tc/'>Terms and Conditions</a></string>
+
+    <!--  The order of profile MATTERS! Changing the order will force Vehicle class to adapt the changes  -->
+    <string-array name="vehicle_mapbox_profile">
+        <item>Driving</item>
+        <item>Driving (Traffic)</item>
+<!--        <item>Walking</item>-->
+<!--        <item>Cycling</item>-->
+    </string-array>
+    <string-array name="vehicle_google_profile">
+        <item>Driving</item>
+<!--        <item>Walking</item>-->
+<!--        <item>Bicycling</item>-->
+<!--        <item>Transit</item>-->
+    </string-array>
+    <string-array name="location_profile">
+        <item>Source</item>
+        <item>Destination</item>
+    </string-array>
+    <string-array name="dsmsolver_optimization_method">
+        <item>Nearest Neighbor</item>
+        <item>Saving Matrix</item>
+    </string-array>
+    <string-array name="dsmsolver_optimization_response_error_message">
+        <item>The optimization method will be implemented soon.</item>
+    </string-array>
+    <string-array name="optimization_response_error_message">
+<!--        Mapbox-->
+        <item>Make sure all the places are connected to road network.</item>
+        <item>Make sure all the places are connected to road network.</item>
+        <item>The optimization is not supported for the given combination of source, destination, and roundtrip. Please report to us for further investigation.</item>
+        <item>Check for places that are too far away from a road. No road segment could be matched for one or more places within the supplied radiuses. </item>
+        <item>Server restriction. Please try again later or contact us if the problem persists for too long.</item>
+        <item>Invalid profile found.</item>
+        <item>The given request was not valid.</item>
+<!--        Add other's optimization API response below this line-->
+    </string-array>
+    <string-array name="distances_method">
+        <item>Air Distance</item>
+        <item>Travel Distance</item>
+        <item>Directions Distance</item>
+    </string-array>
+    <string-array name="measurement_distance_unit">
+        <item>@string/settings_measurement_kilometer</item>
+        <item>@string/settings_measurement_mile</item>
+        <item>@string/settings_measurement_meter</item>
+    </string-array>
+    <string-array name="maps_api">
+        <item>Google</item>
+        <item>Mapbox</item>
+    </string-array>
+    <!-- Strings related to login -->
+    <string name="status_ready">Ready</string>
+    <string name="status_done">Done</string>
+    <string name="status_need_action">Need Action</string>
+    <string name="status_not_ready">Not Ready</string>
+    <string name="status_no_destinations">No Destinations</string>
+    <string name="status_no_sources">No Sources</string>
+    <string name="settings_measurement_kilometer">Kilometer</string>
+    <string name="settings_measurement_mile">Mile</string>
+    <string name="settings_measurement_meter">Meter</string>
+    <string name="measurement_kilometer">%1$s km</string>
+    <string name="measurement_mile">%1$s mi</string>
+    <string name="measurement_meter">%1$s m</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

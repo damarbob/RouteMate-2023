@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- FAB-->
+    <style name="Widget.App.FAB.Primary" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="backgroundTint">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="Widget.App.FAB.Primary.Small" parent="Widget.App.FAB.Primary">
+        <item name="fabSize">mini</item>
+    </style>
+
+    <style name="Widget.App.FAB.Primary.Blue" parent="Widget.Material3.FloatingActionButton.Surface">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Widget.App.FAB.BottomSheet.Primary" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:translationY">-40dp</item>
+        <item name="backgroundTint">?attr/colorOnPrimary</item>
+        <item name="layout_anchor">@id/incBottomSheetMain</item>
+    </style>
+
+    <!-- Buttons -->
+    <style name="Widget.App.Button.IconButton" parent="Widget.Material3.Button.IconButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="Widget.App.Button.IconButton.Filled" parent="Widget.Material3.Button.IconButton.Filled">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="Widget.App.Button.IconOnly.Small" parent="Widget.Material3.Button.IconButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="Widget.App.Button.IconOnly.Small.Outlined" parent="Widget.App.Button.IconOnly.Small">
+        <item name="iconTint">?attr/colorPrimary</item>
+        <item name="backgroundTint">?attr/colorOnPrimary</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.App.Button.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.App.TextButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+    </style>
+
+    <style name="Widget.App.Button" parent="Widget.Material3.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+    </style>
+
+    <style name="Widget.App.Button.Wide" parent="Widget.Material3.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+    </style>
+
+    <style name="Widget.App.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+    </style>
+
+    <style name="Widget.App.Button.Orange" parent="Widget.Material3.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:backgroundTint">@color/orange_500</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.App.Button.Red" parent="Widget.Material3.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:backgroundTint">@color/red_500</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.App.Button.Green" parent="Widget.Material3.Button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="backgroundTint">@drawable/bg_button_green</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.App.Button.Red.OutlinedButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+        <item name="android:textColor">@color/red_500</item>
+        <item name="iconTint">@color/red_500</item>
+        <item name="strokeColor">@color/red_500</item>
+    </style>
+
+</resources>

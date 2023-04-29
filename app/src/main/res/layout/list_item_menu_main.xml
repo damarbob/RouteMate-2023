@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainMenuItemParent"
+    style="@style/Widget.App.Card.MainMenu"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/mainMenuItemParentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:id="@+id/layoutMenuTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/mainMenuItemTitle"
+                style="@style/Widget.App.Text.MainMenuItem.Title"
+                android:layout_gravity="center_vertical"
+                android:text="Places" />
+
+            <TextView
+                android:id="@+id/mainMenuItemLabel"
+                style="@style/Widget.App.Label.Small.Opaque"
+                android:layout_marginTop="0dp"
+                android:layout_marginStart="8dp"
+                android:visibility="visible"
+                android:text="Advanced"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/mainMenuItemDescription"
+            style="@style/Widget.App.Text.Content.Small"
+            android:layout_width="match_parent"
+            android:layout_below="@id/layoutMenuTitle"
+            android:text="A destination location"
+            android:textAlignment="textStart" />
+
+        <TextView
+            android:id="@+id/mainMenuItemNumber"
+            style="@style/Widget.App.Text.MainMenuItem.Count"
+            android:layout_below="@+id/mainMenuItemDescription"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:alpha="1"
+            android:text="0"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/imageMainMenuItemArrow"
+            style="@style/Widget.App.Text.MainMenuItem.Count"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:layout_below="@+id/mainMenuItemDescription"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            android:alpha="0.25"
+            android:src="@drawable/ic_app_keyboard_double_arrow_right" />
+
+        <ImageView
+            android:id="@+id/mainMenuItemIcon"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
+            android:layout_below="@+id/mainMenuItemDescription"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="8dp"
+            android:alpha=".5"
+            android:src="@drawable/ic_app_location_on" />
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutVehicles"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardVehiclesOverview"
+        style="@style/Widget.App.Card.Overview"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/cardVehiclesOverviewLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:clipToPadding="false"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonVehiclesOptions"
+                style="@style/Widget.App.Button.IconOnly.Small"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                app:icon="@drawable/ic_app_more_vert" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/buttonVehiclesOptions"
+                android:layout_alignBottom="@+id/buttonVehiclesOptions"
+                android:layout_marginTop="0dp"
+                android:layout_toStartOf="@+id/buttonVehiclesOptions">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonVehiclesAdd"
+                        style="@style/Widget.App.Button"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Vehicle"
+                        app:icon="@drawable/ic_app_add" />
+
+                    <LinearLayout
+                        style="@style/Widget.App.Label.Small.Gray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/Widget.App.Label.Small.Gray.Image.Content"
+                            android:src="@drawable/ic_app_directions_car" />
+
+                        <TextView
+                            android:id="@+id/textVehiclesNumber"
+                            style="@style/Widget.App.Label.Small.Gray.Text.Content.Bold"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:text="24" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardVehiclesGetStarted"
+        style="@style/Widget.App.Card.Overview"
+        android:visibility="visible"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/Widget.App.Text.Content.Title"
+                android:text="Fleet" />
+
+            <TextView
+                style="@style/Widget.App.Text.Content"
+                android:layout_marginEnd="16dp"
+                android:text="Tap 'Vehicle' to add a new vehicle" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/buttonVehiclesHint"
+                        style="@style/Widget.App.Button.OutlinedButton"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Hint"
+                        app:icon="@drawable/ic_app_info" />
+
+                    <Button
+                        android:id="@+id/buttonVehiclesDismiss"
+                        style="@style/Widget.App.Button.OutlinedButton"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Dismiss"
+                        app:icon="@drawable/ic_app_clear" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvVehiclesList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/cardVehiclesGetStarted" />
+
+</LinearLayout>

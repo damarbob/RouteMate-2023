@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/vehicle_set_default_item"
+        android:icon="@drawable/ic_app_directions_car"
+        android:title="Set as Default" />
+    <item android:id="@+id/vehicle_delete_item"
+        android:icon="@drawable/ic_app_delete"
+        android:title="Delete" />
+</menu>

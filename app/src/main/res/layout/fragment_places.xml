@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutPlaces"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardPlacesOverview"
+        style="@style/Widget.App.Card.Overview"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:id="@+id/cardPlacesOverviewLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="16dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonPlacesOptions"
+                style="@style/Widget.App.Button.IconOnly.Small"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                app:icon="@drawable/ic_app_more_vert" />
+
+            <HorizontalScrollView
+                android:id="@+id/layoutPlacesScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/buttonPlacesOptions"
+                android:layout_alignBottom="@+id/buttonPlacesOptions"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="0dp"
+                android:layout_toStartOf="@+id/buttonPlacesOptions"
+                android:scrollbarSize="1dp"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        style="@style/Widget.App.Label.Small.Gray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            style="@style/Widget.App.Label.Small.Gray.Image.Content"
+                            android:src="@drawable/ic_app_location_on" />
+
+                        <TextView
+                            android:id="@+id/textPlacesNumber"
+                            style="@style/Widget.App.Label.Small.Gray.Text.Content.Bold"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:text="24" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardPlacesGetStarted"
+        style="@style/Widget.App.Card.Overview"
+        android:visibility="visible"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/Widget.App.Text.Content.Title"
+                android:text="Get Started" />
+
+            <TextView
+                style="@style/Widget.App.Text.Content"
+                android:layout_marginEnd="16dp"
+                android:text="Where are you going to start?" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/buttonPlacesMyLocation"
+                        style="@style/Widget.App.Button.OutlinedButton"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="My Location"
+                        app:icon="@drawable/ic_app_my_location" />
+
+                    <Button
+                        android:id="@+id/buttonPlacesPickLocation"
+                        style="@style/Widget.App.Button.OutlinedButton"
+                        android:text="Pick Manually"
+                        app:icon="@drawable/ic_app_location_on" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardPlacesReminderMissingSource"
+        style="@style/Widget.App.Card.Overview"
+        android:visibility="visible"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/Widget.App.Text.Content.Title"
+                android:text="Missing Source" />
+
+            <TextView
+                style="@style/Widget.App.Text.Content"
+                android:layout_marginEnd="16dp"
+                android:text="Add a source place or edit the existing place" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/buttonPlacesReminderMissingSourceHelp"
+                        style="@style/Widget.App.Button.OutlinedButton"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Help"
+                        app:icon="@drawable/ic_app_info" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardPlacesReminderMissingDestination"
+        style="@style/Widget.App.Card.Overview"
+        android:visibility="visible"
+        app:cardBackgroundColor="?attr/colorPrimaryContainer">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/Widget.App.Text.Content.Title"
+                android:text="Missing Destination" />
+
+            <TextView
+                style="@style/Widget.App.Text.Content"
+                android:layout_marginEnd="16dp"
+                android:text="Add destinations on the map" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/buttonPlacesReminderMissingDestinationHelp"
+                        style="@style/Widget.App.Button.OutlinedButton"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginEnd="8dp"
+                        android:text="Help"
+                        app:icon="@drawable/ic_app_info" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:id="@+id/layoutPlacesFilter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/buttonTogglePlacesFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonPlacesFilterAllPlaces"
+                style="@style/Widget.App.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="24"
+                app:icon="@drawable/ic_app_location_on" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonPlacesFilterSource"
+                style="@style/Widget.App.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                app:icon="@drawable/ic_app_warehouse" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonPlacesFilterDestination"
+                style="@style/Widget.App.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                app:icon="@drawable/ic_app_pin_drop" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPlacesList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/cardPlacesGetStarted" />
+
+</LinearLayout>

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.LocationFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardOverview"
+        style="@style/Widget.App.Card.Overview"
+        android:visibility="visible">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/imageLocationIcon"
+                style="@style/Widget.App.ImageView"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/ic_app_location_on" />
+
+            <TextView
+                android:id="@+id/textLocationName"
+                style="@style/Widget.App.Text.Title"
+                android:layout_marginStart="16dp"
+                android:layout_toEndOf="@+id/imageLocationIcon"
+                android:text="Pick a location" />
+
+            <TextView
+                android:id="@+id/textLocationProfile"
+                style="@style/Widget.App.Text.Content"
+                android:layout_below="@+id/textLocationName"
+                android:layout_alignStart="@+id/textLocationName"
+                android:layout_marginTop="4dp"
+                android:text="Destination" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/buttonLocationCenterTo"
+                style="@style/Widget.App.FAB.Primary.Blue"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_app_center_focus_strong" />
+
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardLocationLatLong"
+                style="@style/Widget.App.Card.Outline"
+                android:visibility="visible">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp"
+                    android:paddingStart="16dp">
+
+                    <ImageView
+                        android:id="@+id/imageTransportStatusCheck"
+                        style="@style/Widget.App.ImageView"
+                        android:layout_width="16dp"
+                        android:layout_alignBottom="@+id/textLocationLongTitle"
+                        android:layout_alignParentTop="true"
+                        android:src="@drawable/ic_app_my_location" />
+
+                    <TextView
+                        android:id="@+id/textLocationLatTitle"
+                        style="@style/Widget.App.Text.Content.Small.Bold"
+                        android:layout_marginStart="16dp"
+                        android:layout_toEndOf="@+id/imageTransportStatusCheck"
+                        android:text="Lat" />
+
+                    <TextView
+                        android:id="@+id/textLocationLongTitle"
+                        style="@style/Widget.App.Text.Content.Small.Bold"
+                        android:layout_below="@+id/textLocationLatTitle"
+                        android:layout_alignStart="@+id/textLocationLatTitle"
+                        android:text="Lng" />
+
+                    <TextView
+                        android:id="@+id/textLocationLatValue"
+                        style="@style/Widget.App.Text.Content.Small.Italic"
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@+id/textLocationLatTitle"
+                        android:text="Latitude" />
+
+                    <TextView
+                        android:id="@+id/textLocationLongValue"
+                        style="@style/Widget.App.Text.Content.Small.Italic"
+                        android:layout_alignTop="@+id/textLocationLongTitle"
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@+id/textLocationLongTitle"
+                        android:text="Longitude" />
+
+                </RelativeLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardLocationDemand"
+                style="@style/Widget.App.Card.Outline"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="8dp"
+                    android:paddingStart="16dp">
+
+                    <ImageView
+                        android:id="@+id/imageLocationDemandIcon"
+                        style="@style/Widget.App.ImageView"
+                        android:layout_width="16dp"
+                        android:src="@drawable/ic_app_move_to_inbox" />
+
+                    <TextView
+                        android:id="@+id/textLocationDemandTitle"
+                        style="@style/Widget.App.Text.Content.Small"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="0dp"
+                        android:text="Demand" />
+
+                    <TextView
+                        android:id="@+id/textLocationDemandValue"
+                        style="@style/Widget.App.Text.Content.Small.Bold"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="8dp"
+                        android:text="0.0" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView"
+                style="@style/Widget.App.Card"
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardOverview">
+
+                <LinearLayout
+                    style="@style/Widget.App.ConstraintLayout.Nested"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textLocationAboutTitle"
+                        style="@style/Widget.App.Text.Content.Title"
+                        android:text="About" />
+
+                    <TextView
+                        android:id="@+id/textLocationAboutContent"
+                        style="@style/Widget.App.Text.Content"
+                        android:layout_width="match_parent"
+                        android:text="Destinations' about will be displayed here." />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/materialCardView2"
+                style="@style/Widget.App.Card"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+
+                <LinearLayout
+                    style="@style/Widget.App.ConstraintLayout.Nested"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textLocationNoteTitle"
+                        style="@style/Widget.App.Text.Content.Title"
+                        android:text="My Note" />
+
+                    <TextView
+                        android:id="@+id/textLocationNoteContent"
+                        style="@style/Widget.App.Text.Content"
+                        android:layout_width="match_parent"
+                        android:text="Note will be displayed here" />
+
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonEditLocation"
+                style="@style/Widget.App.Button.OutlinedButton"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Edit Location"
+                app:icon="@drawable/ic_app_create" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

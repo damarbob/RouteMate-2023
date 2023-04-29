@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardDistancesList"
+    style="@style/Widget.App.Card">
+
+    <RelativeLayout
+        android:id="@+id/layoutDistancesList"
+        style="@style/Widget.App.ConstraintLayout.Nested">
+
+        <LinearLayout
+            android:id="@+id/layoutDistancesListTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imageDistancesListIcon"
+                style="@style/Widget.App.ImageView"
+                app:srcCompat="@drawable/ic_app_device_hub" />
+
+            <TextView
+                android:id="@+id/textDistancesListOrigin"
+                style="@style/Widget.App.Text.Content.Title"
+                android:layout_marginStart="16dp"
+                android:text="Origin" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text2"
+            style="@style/Widget.App.Text.Content.Small"
+            android:layout_below="@+id/layoutDistancesListTitle"
+            android:layout_alignStart="@+id/layoutDistancesListTitle"
+            android:layout_marginStart="40dp"
+            android:text="to" />
+
+        <TextView
+            android:id="@+id/textDistancesDestinationValue"
+            style="@style/Widget.App.Text.Content.Small.Bold"
+            android:layout_alignBaseline="@+id/text2"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/text2"
+            android:text="Destination" />
+
+        <LinearLayout
+            android:id="@+id/layoutDistancesDistance"
+            style="@style/Widget.App.Label.Small.Gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                style="@style/Widget.App.Label.Small.Gray.Image.Content"
+                android:layout_gravity="center_vertical"
+                app:srcCompat="@drawable/ic_app_route" />
+
+            <TextView
+                android:id="@+id/textDistancesDistanceValue"
+                style="@style/Widget.App.Label.Small.Gray.Text.Content.Bold"
+                android:layout_marginStart="8dp"
+                android:text="100 m" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textDistancesSavingDestinationValue"
+            style="@style/Widget.App.Text.Content.Small.Bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textDistancesSavingDestinationTitle"
+            android:layout_alignEnd="@+id/layoutDistancesDistance"
+            android:text="100" />
+
+        <TextView
+            android:id="@+id/textDistancesSavingDestinationTitle"
+            style="@style/Widget.App.Text.Content.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutDistancesDistance"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@+id/textDistancesSavingDestinationValue"
+            android:text="Saving" />
+
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

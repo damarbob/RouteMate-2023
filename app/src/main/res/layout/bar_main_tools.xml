@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.App.ConstraintLayout.Nested"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:translationY="-32dp"
+    app:layout_anchor="@+id/incBottomSheetMain"
+    app:layout_anchorGravity="top|right"
+    tools:showIn="@layout/activity_main">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabMainMarkerInfo"
+        style="@style/Widget.App.FAB.Primary.Small"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_app_remove_red_eye"
+        app:fabCustomSize="48dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabMainMarkerLock"
+        style="@style/Widget.App.FAB.Primary.Small"
+        android:src="@drawable/ic_app_lock"
+        app:fabCustomSize="48dp" />
+
+</LinearLayout>

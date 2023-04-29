@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.HomeFragment"
+        android:label="home_fragment"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_placesFragment"
+            app:destination="@id/placesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/scale_down_fade"
+            app:popEnterAnim="@anim/scale_up_fade"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_vehiclesFragment"
+            app:destination="@id/vehiclesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/scale_down_fade"
+            app:popEnterAnim="@anim/scale_up_fade"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_optimizationFragment"
+            app:destination="@id/optimizationFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/scale_down_fade"
+            app:popEnterAnim="@anim/scale_up_fade"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_locationFragment"
+            app:destination="@id/locationFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/scale_down_fade"
+            app:popEnterAnim="@anim/scale_up_fade"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_auth_navigation"
+            app:destination="@id/auth_navigation"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/scale_down_fade"
+            app:popEnterAnim="@anim/scale_up_fade"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_homeFragment_to_distancesFragment"
+            app:destination="@id/distancesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/scale_down_fade"
+            app:popEnterAnim="@anim/scale_up_fade"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/placesFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.PlacesFragment"
+        android:label="places_fragment"
+        tools:layout="@layout/fragment_places" >
+        <action
+            android:id="@+id/action_placesFragment_to_placesEditFragment"
+            app:destination="@id/placesEditFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/scale_down_fade"
+            app:popEnterAnim="@anim/scale_up_fade"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/optimizationFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.OptimizationFragment"
+        android:label="optimization_fragment"
+        tools:layout="@layout/fragment_optimization" >
+        <action
+            android:id="@+id/action_optimizationFragment_to_optimizationSettingsFragment"
+            app:destination="@id/optimizationSettingsFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/scale_down_fade"
+            app:popEnterAnim="@anim/scale_up_fade"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="firstTime"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_optimizationFragment_to_placesFragment"
+            app:destination="@id/placesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/scale_down_fade"
+            app:popEnterAnim="@anim/scale_up_fade"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/placesFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_optimizationFragment_to_vehiclesFragment"
+            app:destination="@id/vehiclesFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/scale_down_fade"
+            app:popEnterAnim="@anim/scale_up_fade"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/vehiclesFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/vehiclesFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.VehiclesFragment"
+        android:label="vehicles_fragment"
+        tools:layout="@layout/fragment_vehicles" >
+        <action
+            android:id="@+id/action_vehiclesFragment_to_vehiclesEditFragment"
+            app:destination="@id/vehiclesEditFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/scale_down_fade"
+            app:popEnterAnim="@anim/scale_up_fade"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="firstTime"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.LocationFragment"
+        android:label="location_fragment"
+        tools:layout="@layout/fragment_location" >
+        <argument
+            android:name="firstTime"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+    <navigation android:id="@+id/auth_navigation"
+        app:startDestination="@id/loginFragment">
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="id.my.dsm.routemate.ui.fragment.LoginFragment"
+            android:label="login_fragment"
+            tools:layout="@layout/fragment_login" >
+            <action
+                android:id="@+id/action_loginFragment_to_registerFragment"
+                app:destination="@id/registerFragment"
+                app:enterAnim="@anim/slide_in_left"
+                app:exitAnim="@anim/scale_down_fade"
+                app:popEnterAnim="@anim/scale_up_fade"
+                app:popExitAnim="@anim/slide_out_right" />
+        </fragment>
+        <fragment
+            android:id="@+id/registerFragment"
+            android:name="id.my.dsm.routemate.ui.fragment.RegisterFragment"
+            android:label="register_fragment"
+            tools:layout="@layout/fragment_register" >
+            <action
+                android:id="@+id/action_registerFragment_to_loginFragment"
+                app:destination="@id/loginFragment"
+                app:popUpTo="@id/loginFragment"
+                app:popUpToInclusive="true" />
+        </fragment>
+        <action
+            android:id="@+id/action_global_homeFragment"
+            app:destination="@id/homeFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/scale_down_fade"
+            app:popEnterAnim="@anim/scale_up_fade"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </navigation>
+    <fragment
+        android:id="@+id/distancesFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.DistancesFragment"
+        android:label="distances_fragment"
+        tools:layout="@layout/fragment_distances" >
+        <argument
+            android:name="firstTime"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <action
+            android:id="@+id/action_distancesFragment_to_distancesEditFragment"
+            app:destination="@id/distancesEditFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/scale_down_fade"
+            app:popEnterAnim="@anim/scale_up_fade"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_locationFragment"
+        app:destination="@id/locationFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/scale_down_fade"
+        app:popEnterAnim="@anim/scale_up_fade"
+        app:popExitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/locationFragment"
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/placesEditFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.PlacesEditFragment"
+        android:label="PlacesEditFragment" >
+        <argument
+            android:name="placeId"
+            app:argType="string" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_distancesEditFragment"
+        app:destination="@id/distancesEditFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/scale_down_fade"
+        app:popEnterAnim="@anim/scale_up_fade"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <action
+        android:id="@+id/action_global_placesEditFragment"
+        app:destination="@id/placesEditFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/scale_down_fade"
+        app:popEnterAnim="@anim/scale_up_fade"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <fragment
+        android:id="@+id/optimizationSettingsFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.OptimizationSettingsFragment"
+        android:label="fragment_optimization_settings2"
+        tools:layout="@layout/fragment_optimization_settings" />
+    <fragment
+        android:id="@+id/vehiclesEditFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.VehiclesEditFragment"
+        android:label="fragment_vehicles_edit2"
+        tools:layout="@layout/fragment_vehicles_edit" >
+        <argument
+            android:name="vehicleIndex"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="isCreateMode"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_vehiclesEditFragment"
+        app:destination="@id/vehiclesEditFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/scale_down_fade"
+        app:popEnterAnim="@anim/scale_up_fade"
+        app:popExitAnim="@anim/slide_out_right" />
+    <action
+        android:id="@+id/action_global_optimizationSettingsFragment"
+        app:destination="@id/optimizationSettingsFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/scale_down_fade"
+        app:popEnterAnim="@anim/scale_up_fade"
+        app:popExitAnim="@anim/slide_out_right"/>
+    <action
+        android:id="@+id/action_global_auth_navigation"
+        app:destination="@id/auth_navigation"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/scale_down_fade"
+        app:popEnterAnim="@anim/scale_up_fade"
+        app:popExitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/auth_navigation"
+        app:popUpToInclusive="true" />
+    <fragment
+        android:id="@+id/distancesEditFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.DistancesEditFragment"
+        android:label="DistancesEditFragment" >
+        <argument
+            android:name="distanceIndex"
+            app:argType="integer" />
+        <argument
+            android:name="placesName"
+            app:argType="string[]"
+            app:nullable="true" />
+    </fragment>
+</navigation>

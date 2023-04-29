@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/help_nav_graph"
+    app:startDestination="@id/quickHelpHomeFragment">
+
+    <fragment
+        android:id="@+id/quickHelpAddingSourceFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.dialog.QuickHelpAddingSourceFragment"
+        android:label="fragment_quick_help_adding_source"
+        tools:layout="@layout/fragment_quick_help_adding_source" />
+    <fragment
+        android:id="@+id/quickHelpHomeFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.dialog.QuickHelpHomeFragment"
+        android:label="QuickHelpHomeFragment" />
+    <fragment
+        android:id="@+id/quickHelpAddingPlacesFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.dialog.QuickHelpAddingPlacesFragment"
+        android:label="QuickHelpAddingPlacesFragment" />
+    <action
+        android:id="@+id/action_global_quickHelpAddingSourceFragment"
+        app:destination="@id/quickHelpAddingSourceFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/scale_down_fade"
+        app:popEnterAnim="@anim/scale_up_fade"
+        app:popExitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/quickHelpAddingSourceFragment"
+        app:popUpToInclusive="true" />
+    <action
+        android:id="@+id/action_global_quickHelpAddingPlacesFragment"
+        app:destination="@id/quickHelpAddingPlacesFragment"
+        app:enterAnim="@anim/slide_in_left"
+        app:exitAnim="@anim/scale_down_fade"
+        app:popEnterAnim="@anim/scale_up_fade"
+        app:popExitAnim="@anim/slide_out_right"
+        app:popUpTo="@id/quickHelpAddingPlacesFragment"
+        app:popUpToInclusive="true" />
+</navigation>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.App.Dialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonBack"
+                style="@style/Widget.App.Button.IconButton"
+                app:icon="@drawable/ic_app_arrow_back_ios_new" />
+
+            <TextView
+                android:id="@+id/textTitle"
+                style="@style/Widget.App.Text.Title"
+                android:layout_marginStart="8dp"
+                android:text="Register" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textInfo"
+            style="@style/Widget.App.Text.Content"
+            android:layout_width="match_parent"
+            android:text="@string/register_tc_agreement" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutFullName"
+            style="@style/Widget.App.Dialog.TextInputLayout"
+            android:hint="Full Name"
+            app:startIconDrawable="@drawable/ic_app_account_circle">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextFullName"
+                style="@style/Widget.App.TextInputEditText"
+                android:imeActionId="666"
+                android:imeActionLabel="Some Label"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutEmail"
+            style="@style/Widget.App.Dialog.TextInputLayout"
+            android:hint="Email"
+            app:startIconDrawable="@drawable/ic_app_alternate_email">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmail"
+                style="@style/Widget.App.TextInputEditText"
+                android:imeActionId="666"
+                android:imeActionLabel="Some Label"
+                android:inputType="textEmailAddress" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayoutPassword"
+            style="@style/Widget.App.Dialog.TextInputLayout"
+            android:hint="Password"
+            app:startIconDrawable="@drawable/ic_app_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPassword"
+                style="@style/Widget.App.TextInputEditText"
+                android:imeActionId="666"
+                android:imeActionLabel="Some Label"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonRegister"
+            style="@style/Widget.App.Button.Wide"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Register"
+            app:icon="@drawable/ic_app_key" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonSwitch"
+            style="@style/Widget.App.TextButton"
+            android:layout_width="match_parent"
+            android:text="I already have an account" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

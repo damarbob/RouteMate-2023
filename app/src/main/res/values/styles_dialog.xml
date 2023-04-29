@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Dialog -->
+    <style name="Widget.App.Dialog" parent="Widget.App.Card">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">16dp</item>
+    </style>
+
+    <style name="Widget.App.Dialog.TextInputLayout" parent="Widget.App.TextInputLayout">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="boxCornerRadiusTopStart">16dp</item>
+        <item name="boxCornerRadiusTopEnd">16dp</item>
+        <item name="boxCornerRadiusBottomStart">16dp</item>
+        <item name="boxCornerRadiusBottomEnd">16dp</item>
+    </style>
+
+    <style name="Widget.App.Dialog.TextInputLayout.ExposedDropdownMenu" parent="Widget.App.TextInputLayout.ExposedDropdownMenu">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="boxCornerRadiusTopStart">16dp</item>
+        <item name="boxCornerRadiusTopEnd">16dp</item>
+        <item name="boxCornerRadiusBottomStart">16dp</item>
+        <item name="boxCornerRadiusBottomEnd">16dp</item>
+    </style>
+
+</resources>

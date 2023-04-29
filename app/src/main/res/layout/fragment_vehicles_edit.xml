@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonVehiclesBack"
+            style="@style/Widget.App.Button.IconButton"
+            app:icon="@drawable/ic_app_arrow_back_ios_new" />
+
+        <TextView
+            style="@style/Widget.App.Text.Title"
+            android:layout_marginStart="16dp"
+            android:text="Edit Vehicle" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/Widget.App.Text.Content"
+                android:layout_width="match_parent"
+                android:text="Here you can set name, capacity, and driving mode for your vehicle." />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout3"
+                    style="@style/Widget.App.Dialog.TextInputLayout"
+                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@+id/buttonVehiclesColor"
+                    android:hint="Name"
+                    app:startIconDrawable="@drawable/ic_app_directions_car">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextVehiclesName"
+                        style="@style/Widget.App.TextInputEditText"
+                        android:imeActionId="666"
+                        android:imeActionLabel="Some Label" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonVehiclesColor"
+                    style="@style/Widget.App.Button.IconButton"
+                    android:layout_alignTop="@+id/textInputLayout3"
+                    android:layout_alignBottom="@+id/textInputLayout3"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="8dp"
+                    android:backgroundTint="@color/blue_50"
+                    app:icon="@drawable/ic_app_color_lens"
+                    app:iconTint="?attr/colorOnPrimary" />
+
+            </RelativeLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputVehiclesCapacity"
+                style="@style/Widget.App.Dialog.TextInputLayout"
+                android:hint="Capacity"
+                app:startIconDrawable="@drawable/ic_app_inventory">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextVehiclesCapacity"
+                    style="@style/Widget.App.TextInputEditText"
+                    android:imeActionId="666"
+                    android:imeActionLabel="Some Label"
+                    android:inputType="number" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
+                style="@style/Widget.App.Dialog.TextInputLayout.ExposedDropdownMenu"
+                android:layout_marginTop="8dp"
+                android:hint="Vehicle Profile"
+                app:startIconDrawable="@drawable/ic_app_navigation">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autocompleteVehiclesProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Driving" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkBoxVehicleDefault"
+                style="@style/Widget.App.CheckBox"
+                android:layout_marginTop="8dp"
+                android:text="Set as a default vehicle" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonVehiclesSave"
+                style="@style/Widget.App.Button.Wide"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="8dp"
+                android:text="Save"
+                app:icon="@drawable/ic_app_save" />
+
+            <LinearLayout
+                android:id="@+id/layoutVehiclesAdditionalProFeature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewY"
+                    style="@style/Widget.App.Text.Title"
+                    android:layout_marginTop="16dp"
+                    android:text="Constraints" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    style="@style/Widget.App.Text.Content.Small"
+                    android:text="Adjust vehicle-specific constraints" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayout4"
+                    style="@style/Widget.App.Dialog.TextInputLayout"
+                    android:hint="Max. Vehicle Dispatched"
+                    app:helperText="Maximum number of vehicle dispatched (1000 default)"
+                    app:startIconDrawable="@drawable/ic_app_last_page">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextVehiclesDispatchLimit"
+                        style="@style/Widget.App.TextInputEditText"
+                        android:inputType="number"
+                        android:text="1000" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

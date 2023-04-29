@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonOptimizationBack"
+            style="@style/Widget.App.Button.IconButton"
+            app:icon="@drawable/ic_app_arrow_back_ios_new" />
+
+        <TextView
+            style="@style/Widget.App.Text.Title"
+            android:layout_marginStart="8dp"
+            android:text="Optimization Settings" />
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/checkBoxOptimizationUseAdvancedAlgorithm"
+            style="@style/Widget.App.Switch"
+            android:layout_marginTop="8dp"
+            android:text="Use Advanced Algorithm" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutX"
+                style="@style/Widget.App.Dialog.TextInputLayout.ExposedDropdownMenu"
+                android:hint="Maps API"
+                app:startIconDrawable="@drawable/ic_app_round_link">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autocompleteOptimizationMapsAPI"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Mapbox" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                style="@style/Widget.App.Dialog.TextInputLayout.ExposedDropdownMenu"
+                android:hint="Distance Matrix Calculation Method"
+                app:startIconDrawable="@drawable/ic_app_device_hub">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autocompleteOptimizationDistancesMethod"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Air Distance" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout2"
+                style="@style/Widget.App.Dialog.TextInputLayout.ExposedDropdownMenu"
+                android:hint="Optimization Method"
+                app:startIconDrawable="@drawable/ic_app_architecture">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autocompleteOptimizationMethod"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:text="Nearest Neighbor" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkBoxOptimizationAllowRoundtrip"
+                style="@style/Widget.App.CheckBox"
+                android:layout_marginTop="8dp"
+                android:text="Allow roundtrip" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkBoxOptimizationAllowMultipleVisit"
+                style="@style/Widget.App.CheckBox"
+                android:layout_marginTop="8dp"
+                android:enabled="false"
+                android:text="Allow split delivery (wip)" />
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

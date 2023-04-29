@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.dialog.QuickHelpFragment">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/quickHelpFragmentContainer"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/help_nav_graph" />
+
+    <TextView
+        style="@style/Widget.App.Text.Content.Small.Italic"
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:text="Scroll down to continue reading" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonQuickHelpUnderstood"
+        style="@style/Widget.App.Button"
+        android:layout_width="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Understood"
+        app:icon="@drawable/ic_app_check_circle_outline" />
+
+</LinearLayout>

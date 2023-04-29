@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.dialog.QuickHelpAddingSourceFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/lottie_intro_adding_location" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                style="@style/Widget.App.Text.Title"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="8dp"
+                android:text="Adding Places" />
+
+            <TextView
+                style="@style/Widget.App.Text.QuickHelp.Content"
+                android:layout_width="match_parent"
+                android:text="Activate 'Draw Mode' by tapping the 'Pencil' button" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/quick_help_adding_places_1" />
+
+            <TextView
+                style="@style/Widget.App.Text.QuickHelp.Content"
+                android:layout_width="match_parent"
+                android:text="Find your desired place in the map" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:src="@drawable/quick_help_adding_places_2" />
+
+            <TextView
+                style="@style/Widget.App.Text.QuickHelp.Content"
+                android:layout_width="match_parent"
+                android:text="Tap on the map to add marker" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:src="@drawable/quick_help_adding_places_3" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/maps_nav_graph"
+    app:startDestination="@id/basicMapsFragment">
+
+    <fragment
+        android:id="@+id/basicMapsFragment"
+        android:name="id.my.dsm.routemate.ui.fragment.maps.BasicMapsFragment"
+        android:label="fragment_basic_maps"
+        tools:layout="@layout/fragment_basic_maps" >
+        <action
+            android:id="@+id/action_basicMapsFragment_self"
+            app:destination="@id/basicMapsFragment"
+            app:enterAnim="@anim/scale_up"
+            app:popUpTo="@id/basicMapsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

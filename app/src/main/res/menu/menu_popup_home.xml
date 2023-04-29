@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/home_switch_menu_layout"
+        android:icon="@drawable/ic_app_sync"
+        android:title="Switch Menu Layout" />
+    <item android:id="@+id/home_show_intro"
+        android:icon="@drawable/ic_app_info"
+        android:title="Show Introduction" />
+</menu>

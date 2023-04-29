@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/optimization_clear_result"
+        android:icon="@drawable/ic_app_clear"
+        android:title="Clear Result" />
+    <item android:id="@+id/optimization_show_hint"
+        android:icon="@drawable/ic_app_info"
+        android:title="Show Hint" />
+</menu>

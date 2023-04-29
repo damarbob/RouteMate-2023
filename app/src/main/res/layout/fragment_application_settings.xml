@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonSettingsBack"
+            style="@style/Widget.App.Button.IconButton"
+            app:icon="@drawable/ic_app_arrow_back_ios_new" />
+
+        <TextView
+            style="@style/Widget.App.Text.Title"
+            android:layout_marginStart="8dp"
+            android:text="Settings" />
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/Widget.App.Text.Content.Small"
+        android:layout_width="match_parent"
+        android:text="Settings will be saved automatically" />
+
+    <TextView
+        style="@style/Widget.App.Text.Content.Title"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Application Theme" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupSettingsTheme"
+        android:checkedButton="@+id/radioButtonSettingsThemeAuto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radioButtonSettingsThemeAuto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Auto"/>
+        <RadioButton
+            android:id="@+id/radioButtonSettingsThemeLight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Light"/>
+        <RadioButton
+            android:id="@+id/radioButtonSettingsThemeDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dark"/>
+
+    </RadioGroup>
+
+    <TextView
+        style="@style/Widget.App.Text.Content.Title"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Measurement Unit" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.App.Dialog.TextInputLayout.ExposedDropdownMenu"
+        android:hint="Measurement Unit"
+        app:startIconDrawable="@drawable/ic_app_route">
+
+        <AutoCompleteTextView
+            android:id="@+id/autocompleteSettingsMeasurementUnit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="none"
+            android:text="Kilometer (km)" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

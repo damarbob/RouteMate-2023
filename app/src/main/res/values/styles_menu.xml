@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- PopupMenu -->
+    <style name="Widget.App.PopupMenu" parent="Widget.Material3.PopupMenu">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+</resources>

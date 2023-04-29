@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.App.Card" parent="Widget.Material3.CardView.Filled">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="Widget.App.Card.Outline" parent="Widget.Material3.CardView.Outlined">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="Widget.App.Card.MainMenu" parent="Widget.App.Card">
+        <!--        <item name="android:layout_marginEnd">0dp</item>-->
+    </style>
+
+    <style name="Widget.App.Card.Overview" parent="Widget.App.Card">
+        <item name="android:paddingTop">8dp</item>
+        <item name="cardBackgroundColor">#00FFFFFF</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardMaxElevation">0dp</item>
+    </style>
+
+    <style name="Widget.App.Card.Label" parent="Widget.App.Card">
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="cardBackgroundColor">#00FFFFFF</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardMaxElevation">0dp</item>
+    </style>
+
+    <style name="Widget.App.Card.Label.Red" parent="Widget.App.Card.Label">
+        <item name="cardBackgroundColor">@color/red_500</item>
+    </style>
+
+    <style name="Widget.App.Card.BottomSheet" parent="Theme.Material3.DayNight">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:translationY">88dp</item>
+        <item name="layout_behavior">com.google.android.material.bottomsheet.BottomSheetBehavior
+        </item>
+        <!--        peekHeight should be updated in coordinator behaviors too if any-->
+        <item name="behavior_peekHeight">320dp</item>
+        <item name="behavior_hideable">true</item>
+        <item name="behavior_draggable">true</item>
+        <item name="cardCornerRadius">0dp</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="cardBackgroundColor">?attr/colorSurfaceContainerLow</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardMaxElevation">2dp</item>
+    </style>
+
+</resources>

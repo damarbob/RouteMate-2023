@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.dialog.QuickHelpAddingSourceFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            style="@style/Widget.App.Text.Title"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="8dp"
+            android:text="Adding Source" />
+
+        <TextView
+            style="@style/Widget.App.Text.QuickHelp.Content"
+            android:layout_width="match_parent"
+            android:text="Tap a place from the place list to edit." />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:src="@drawable/quick_help_adding_source_1" />
+
+        <TextView
+            style="@style/Widget.App.Text.QuickHelp.Content"
+            android:layout_width="match_parent"
+            android:text="Edit the Profile to 'Source'." />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:src="@drawable/quick_help_adding_source_2" />
+
+        <TextView
+            style="@style/Widget.App.Text.QuickHelp.Content"
+            android:layout_width="match_parent"
+            android:text="Tap 'Save'." />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:src="@drawable/quick_help_adding_source_3" />
+
+    </LinearLayout>
+
+</ScrollView>

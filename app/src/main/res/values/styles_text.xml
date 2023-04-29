@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Texts -->
+    <style name="Widget.App.Text.MainMenuItem.Title" parent="Widget.App.Text.Title">
+<!--        <item name="android:textColor">?attr/colorPrimary</item>-->
+    </style>
+    <style name="Widget.App.Text.MainMenuItem.Count" parent="Widget.App.Text.Title">
+<!--        <item name="android:textColor">?attr/colorPrimary</item>-->
+        <item name="android:textSize">36sp</item>
+    </style>
+
+    <style name="Widget.App.Text.Title" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.App.Text.Highlight.Green" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:textColor">@color/green_500</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Widget.App.Text.Content.Title" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.App.Text.Content" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Widget.App.Text.Content.Small" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Widget.App.Text.Content.Small.Italic" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="Widget.App.Text.Content.Small.Bold" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+<!--    Quick Help-->
+    <style name="Widget.App.Text.QuickHelp.Content" parent="Widget.App.Text.Content">
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+    <!-- Route Section -->
+    <style name="Widget.App.Text.Content.Place" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">false</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:fadingEdge">horizontal</item>
+        <item name="android:focusableInTouchMode">false</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="Widget.App.Text.Content.Place.Error.Red" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:textColor">@color/red_500</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="Widget.App.Text.Content.Place.Error.Orange" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:textColor">@color/orange_500</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+</resources>
