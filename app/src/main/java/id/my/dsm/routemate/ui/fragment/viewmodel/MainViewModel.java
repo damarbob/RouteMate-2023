@@ -1,7 +1,9 @@
 package id.my.dsm.routemate.ui.fragment.viewmodel;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,6 +18,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Date;
+import java.util.logging.Handler;
 
 import javax.inject.Inject;
 
@@ -32,11 +35,11 @@ import id.my.dsm.routemate.data.model.user.DSMUser;
 import id.my.dsm.routemate.data.model.userdata.UserData;
 import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
 import id.my.dsm.routemate.data.repo.distance.SolutionRepositoryN;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
 import id.my.dsm.routemate.data.repo.mapbox.MapboxDirectionsRouteRepository;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
 import id.my.dsm.routemate.data.repo.user.SessionRepository;
 import id.my.dsm.routemate.data.repo.user.UserRepository;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
 import id.my.dsm.routemate.ui.fragment.viewmodel.mapsviewmodel.MapboxDirectionsRouteManager;
 import id.my.dsm.routemate.usecase.userdata.LoadUserDataIntoRepositoriesUseCase;
 
@@ -58,7 +61,7 @@ public class MainViewModel extends ViewModel {
     @Inject
     PlaceRepositoryN placeRepository;
     @Inject
-    VehicleRepositoryN vehicleRepository;
+    FleetRepository vehicleRepository;
     @Inject
     SolutionRepositoryN solutionRepository;
     @Inject
@@ -148,7 +151,7 @@ public class MainViewModel extends ViewModel {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.POSTING)
     public void _105705072022(@NonNull OnRetrieveUserData event) {
         switch (event.getStatus()) {
 
@@ -160,12 +163,10 @@ public class MainViewModel extends ViewModel {
                 UserData userData = event.getUserData(); // UserData is always NonNull if succeed
                 assert userData != null;
 
-                int placeRepositoryRecordsCount = placeRepository.getRecordsCount();
-                int vehicleRepositoryRecordsCount = vehicleRepository.getRecordsCount();
-                int solutionRepositoryRecordsCount = solutionRepository.getRecordsCount();
-                int distanceRepositoryRecordsCount = distanceRepository.getRecordsCount();
-
-                if (placeRepositoryRecordsCount != 0 || vehicleRepositoryRecordsCount > 1 || solutionRepositoryRecordsCount != 0 || distanceRepositoryRecordsCount != 0) {
+                if (placeRepository.getRecordsCount() != 0 ||
+                        vehicleRepository.getRecordsCount() > 1 ||
+                        solutionRepository.getRecordsCount() != 0 ||
+                        distanceRepository.getRecordsCount() != 0) {
                     Log.e(TAG, "OnRetrieveUserData: Cannot load UserData because user is currently working on the new data");
                     return;
                 }
@@ -173,14 +174,14 @@ public class MainViewModel extends ViewModel {
                 // Fill newly fetched user data into repositories
                 loadUserDataIntoRepositoriesUseCase.invoke(
                         userData.getPlaces(),
-                        userData.getVehicles(),
+                        userData.getFleets(),
                         userData.getMatrix(),
                         userData.getSolutions(),
                         userData.getMapboxDirectionsRoutes(),
                         userData.getOptimizationMethod(),
                         userData.getUsingAdvancedAlgorithm());
 
-                Toast.makeText(context, "Session restored", Toast.LENGTH_SHORT).show();
+                ((Activity) context).runOnUiThread(()->Toast.makeText(context, "Session restored", Toast.LENGTH_SHORT).show());
                 
                 Log.d(TAG, "OnRetrieveUserData: UserData loaded successfully");
 

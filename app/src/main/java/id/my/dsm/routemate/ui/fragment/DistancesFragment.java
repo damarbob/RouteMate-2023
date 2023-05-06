@@ -34,18 +34,18 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import id.my.dsm.routemate.R;
+import id.my.dsm.routemate.data.enums.MapboxProfile;
 import id.my.dsm.routemate.data.event.repo.OnDistanceRepositoryUpdate;
 import id.my.dsm.routemate.data.event.view.OnBottomSheetStateChanged;
 import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
 import id.my.dsm.routemate.databinding.FragmentDistancesBinding;
-import id.my.dsm.routemate.library.dsmlib.DSMSolver;
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
 import id.my.dsm.routemate.ui.fragment.viewmodel.DistancesViewModel;
 import id.my.dsm.routemate.ui.model.OptionsMenu;
 import id.my.dsm.routemate.ui.recyclerview.DistanceRecViewAdapter;
 import id.my.dsm.routemate.usecase.distance.RequestMapboxDistanceMatrixUseCase;
+import id.my.dsm.vrpsolver.DSMSolver;
+import id.my.dsm.vrpsolver.model.MatrixElement;
 
 @AndroidEntryPoint
 public class DistancesFragment extends Fragment {
@@ -136,7 +136,7 @@ public class DistancesFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                         break;
                     case R.id.distances_calculate_matrix_mapbox:
-                        requestMapboxDistanceMatrixUseCase.invoke(Vehicle.MapboxProfile.DRIVING.toDirectionsCriteria(), false);
+                        requestMapboxDistanceMatrixUseCase.invoke(MapboxProfile.DRIVING.toDirectionsCriteria(), false);
                         break;
                     case R.id.distances_calculate_saving:
                         DSMSolver.calculateDistanceSavingValue(placeRepository.getDSMPlaces(), distanceRepository.getRecords());

@@ -1,6 +1,5 @@
 package id.my.dsm.routemate.usecase.userdata;
 
-import android.app.Activity;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseUser;
@@ -11,12 +10,10 @@ import id.my.dsm.routemate.data.model.user.DSMUser;
 import id.my.dsm.routemate.data.model.userdata.UserData;
 import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
 import id.my.dsm.routemate.data.repo.distance.SolutionRepositoryN;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
 import id.my.dsm.routemate.data.repo.mapbox.MapboxDirectionsRouteRepository;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
 import id.my.dsm.routemate.data.repo.user.UserRepository;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
-import id.my.dsm.routemate.library.dsmlib.enums.OptimizationMethod;
-import id.my.dsm.routemate.ui.model.RouteMatePref;
 
 public class UploadUserDataUseCase {
 
@@ -24,16 +21,16 @@ public class UploadUserDataUseCase {
 
     private final UserRepository userRepository;
     private final PlaceRepositoryN placeRepository;
-    private final VehicleRepositoryN vehicleRepository;
+    private final FleetRepository fleetRepository;
     private final DistanceRepositoryN distanceRepository;
     private final SolutionRepositoryN solutionRepository;
     private final MapboxDirectionsRouteRepository mapboxDirectionsRouteRepository;
 
     @Inject
-    public UploadUserDataUseCase(UserRepository userRepository, PlaceRepositoryN placeRepository, VehicleRepositoryN vehicleRepository, DistanceRepositoryN distanceRepository, SolutionRepositoryN solutionRepository, MapboxDirectionsRouteRepository mapboxDirectionsRouteRepository) {
+    public UploadUserDataUseCase(UserRepository userRepository, PlaceRepositoryN placeRepository, FleetRepository fleetRepository, DistanceRepositoryN distanceRepository, SolutionRepositoryN solutionRepository, MapboxDirectionsRouteRepository mapboxDirectionsRouteRepository) {
         this.userRepository = userRepository;
         this.placeRepository = placeRepository;
-        this.vehicleRepository = vehicleRepository;
+        this.fleetRepository = fleetRepository;
         this.distanceRepository = distanceRepository;
         this.solutionRepository = solutionRepository;
         this.mapboxDirectionsRouteRepository = mapboxDirectionsRouteRepository;
@@ -64,7 +61,7 @@ public class UploadUserDataUseCase {
         if (includePlaces)
             userData.withPlaces(placeRepository.getRecords());
         if (includeVehicles)
-            userData.withVehicles(vehicleRepository.getRecords());
+            userData.withVehicles(fleetRepository.getRecords());
         if (includeMatrix)
             userData.withMatrix(distanceRepository.getRecords());
         if (includeSolution)

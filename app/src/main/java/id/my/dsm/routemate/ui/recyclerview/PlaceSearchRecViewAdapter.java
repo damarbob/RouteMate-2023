@@ -19,7 +19,7 @@ import id.my.dsm.routemate.R;
 import id.my.dsm.routemate.data.event.repo.OnRepositoryUpdate;
 import id.my.dsm.routemate.data.event.view.OnMainActivityFeatureRequest;
 import id.my.dsm.routemate.data.event.viewmodel.OnMapsViewModelRequest;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.usecase.repository.AlterRepositoryUseCase;
 
 public class PlaceSearchRecViewAdapter extends RecyclerView.Adapter<PlaceSearchRecViewAdapter.ViewHolder> {

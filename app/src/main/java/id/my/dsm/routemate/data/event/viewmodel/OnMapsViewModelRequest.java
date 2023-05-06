@@ -5,10 +5,10 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
+import id.my.dsm.routemate.data.model.fleet.Fleet;
 import id.my.dsm.routemate.data.model.maps.MapboxDirectionsRoute;
-import id.my.dsm.routemate.data.place.Place;
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
+import id.my.dsm.routemate.data.model.place.Place;
+import id.my.dsm.vrpsolver.model.MatrixElement;
 
 /**
  * Bridge event dispatched into {@link id.my.dsm.routemate.ui.fragment.viewmodel.MapsViewModel} as request.
@@ -28,14 +28,14 @@ public final class OnMapsViewModelRequest {
     private final Event event;
     private final Place place;
     private final List<MatrixElement> matrix;
-    private final Vehicle vehicle;
+    private final Fleet fleet;
     private final List<MapboxDirectionsRoute> mapboxDirectionsRoutes;
 
     private OnMapsViewModelRequest(@NonNull Builder builder) {
         this.event = builder.event;
         this.place = builder.place;
         this.matrix = builder.matrix;
-        this.vehicle = builder.vehicle;
+        this.fleet = builder.fleet;
         this.mapboxDirectionsRoutes = builder.mapboxDirectionsRoutes;
     }
 
@@ -55,8 +55,8 @@ public final class OnMapsViewModelRequest {
     }
 
     @Nullable
-    public Vehicle getVehicle() {
-        return vehicle;
+    public Fleet getFleet() {
+        return fleet;
     }
 
     @Nullable
@@ -68,7 +68,7 @@ public final class OnMapsViewModelRequest {
         private final Event event;
         private Place place;
         private List<MatrixElement> matrix;
-        private Vehicle vehicle;
+        private Fleet fleet;
         private List<MapboxDirectionsRoute> mapboxDirectionsRoutes;
 
         public Builder(@NonNull Event event) {
@@ -85,8 +85,8 @@ public final class OnMapsViewModelRequest {
             return this;
         }
 
-        public Builder withVehicle(@NonNull Vehicle vehicle) {
-            this.vehicle = vehicle;
+        public Builder withVehicle(@NonNull Fleet fleet) {
+            this.fleet = fleet;
             return this;
         }
 

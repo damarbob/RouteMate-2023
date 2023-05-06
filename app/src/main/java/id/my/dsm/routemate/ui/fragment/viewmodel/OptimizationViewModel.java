@@ -25,43 +25,37 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 import id.my.dsm.routemate.R;
 import id.my.dsm.routemate.data.event.model.OnUpdateUserSession;
 import id.my.dsm.routemate.data.event.network.OnDistanceMatrixResponse;
+import id.my.dsm.routemate.data.event.network.OnOptimizationResponse;
 import id.my.dsm.routemate.data.event.repo.OnRepositoryUpdate;
 import id.my.dsm.routemate.data.event.view.OnProgressIndicatorUpdate;
 import id.my.dsm.routemate.data.event.viewmodel.OnDistancesViewModelRequest;
 import id.my.dsm.routemate.data.model.DSMTimestamp;
+import id.my.dsm.routemate.data.model.fleet.Fleet;
 import id.my.dsm.routemate.data.model.maps.MapboxDirectionsRoute;
 import id.my.dsm.routemate.data.model.session.UserSession;
 import id.my.dsm.routemate.data.model.user.DSMUser;
 import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
 import id.my.dsm.routemate.data.repo.distance.SolutionRepositoryN;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
 import id.my.dsm.routemate.data.repo.mapbox.MapboxDirectionsRouteRepository;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
 import id.my.dsm.routemate.data.repo.user.SessionRepository;
 import id.my.dsm.routemate.data.repo.user.UserRepository;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
-import id.my.dsm.routemate.library.dsmlib.DSMSolver;
-import id.my.dsm.routemate.library.dsmlib.enums.OptimizationMethod;
-import id.my.dsm.routemate.data.event.network.OnOptimizationResponse;
-import id.my.dsm.routemate.library.dsmlib.event.OptimizationResponseError;
-import id.my.dsm.routemate.library.dsmlib.event.OptimizationResponseListener;
-import id.my.dsm.routemate.library.dsmlib.model.Solution;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
 import id.my.dsm.routemate.ui.model.RouteMatePref;
 import id.my.dsm.routemate.usecase.optimization.RequestMapboxOptimizationUseCase;
 import id.my.dsm.routemate.usecase.repository.AlterRepositoryUseCase;
 import id.my.dsm.routemate.usecase.solution.RequestMapboxDirectionsRouteUseCase;
 import id.my.dsm.routemate.usecase.userdata.UploadUserDataUseCase;
+import id.my.dsm.vrpsolver.DSMSolver;
+import id.my.dsm.vrpsolver.enums.OptimizationMethod;
+import id.my.dsm.vrpsolver.event.OptimizationResponseError;
+import id.my.dsm.vrpsolver.event.OptimizationResponseListener;
+import id.my.dsm.vrpsolver.model.Solution;
 
 @HiltViewModel
 public class OptimizationViewModel extends ViewModel implements OptimizationResponseListener {
 
-    private enum OptimizationRequirementCheckResult {
-        WithMatrixCalculation,
-        WithoutMatrixCalculation,
-        ConfirmMatrixRecalculation
-    }
-
-    private static final String TAG = "OptimizationViewModel";
+    private static final String TAG = OptimizationViewModel.class.getSimpleName();
 
     public final static long MILLIS_PER_DAY = 24 * 60 * 60 * 1000L;
 
@@ -73,7 +67,7 @@ public class OptimizationViewModel extends ViewModel implements OptimizationResp
     @Inject
     PlaceRepositoryN placeRepository;
     @Inject
-    VehicleRepositoryN vehicleRepository;
+    FleetRepository vehicleRepository;
     @Inject
     DistanceRepositoryN distanceRepository;
     @Inject
@@ -171,8 +165,7 @@ public class OptimizationViewModel extends ViewModel implements OptimizationResp
      */
     public void requestOptimization() {
 
-        Boolean useAdvancedAlgorithm = RouteMatePref.readOptimizationIsAdvancedAlgorithm((Activity) context);
-        OptimizationMethod optimizationMethod = RouteMatePref.readOptimizationMethod((Activity) context); // Read optimization method
+        Boolean useAdvancedAlgorithm = RouteMatePref.readOptimizationIsAdvancedAlgorithm((Activity) context); // Read advanced algorithm settings
 
         // Start of general optimization requirements checking
         // Any NON method-related requirements for optimization are checked here
@@ -190,7 +183,7 @@ public class OptimizationViewModel extends ViewModel implements OptimizationResp
             return;
         }
         else if (
-                placeRepository.getRecordsCount() >= 12
+                placeRepository.getRecordsCount() > 12
                         && !useAdvancedAlgorithm
         ) {
             new MaterialAlertDialogBuilder(context)
@@ -207,10 +200,14 @@ public class OptimizationViewModel extends ViewModel implements OptimizationResp
 
         // End of general optimization requirements checking
 
+//        clearMapboxDirectionsRoute(); // Clear the previous directionsRoute first
+
         if (!useAdvancedAlgorithm) {
             startOptimization(false); // Directly proceed to optimization if optimization method is default
             return;
         }
+
+        // Start optimization based on conditions
         if (distanceRepository.getRecordsCount() == 0)
             startOptimization(true); // If no distance records found, start optimization immediately with matrix calculation
         else
@@ -264,15 +261,15 @@ public class OptimizationViewModel extends ViewModel implements OptimizationResp
         OptimizationMethod optimizationMethod = RouteMatePref.readOptimizationMethod((Activity) context);
         boolean isRoundTrip = RouteMatePref.readBoolean((Activity) context, RouteMatePref.OPTIMIZATION_IS_ROUND_TRIP, true);
 
-        Vehicle defaultVehicle = vehicleRepository.getDefaultVehicle(); // Get default vehicle
+        Fleet defaultVehicle = vehicleRepository.getDefaultVehicle(); // Get default vehicle
 
         if (!useAdvancedAlgorithm) {
-            requestMapboxOptimizationUseCase.invoke(placeRepository.getRecords(), vehicleRepository.getRecords(), isRoundTrip);
+            requestMapboxOptimizationUseCase.invoke(placeRepository.getRecords(), isRoundTrip);
             return;
         }
 
         Log.e(TAG, "Distances: " + distanceRepository.getRecords().size() + " | Places: " + placeRepository.getRecords().size() + " | Default Vehicle: " + defaultVehicle);
-        new DSMSolver.OptimizationBuilder(distanceRepository.getRecords(), placeRepository.getDSMPlaces(), vehicleRepository.getRecords())
+        new DSMSolver.OptimizationBuilder(distanceRepository.getRecords(), placeRepository.getDSMPlaces(), vehicleRepository.getVehicles())
                 .withMethod(optimizationMethod)
                 .withRoundTrip(isRoundTrip)
                 .optimize();
@@ -283,7 +280,7 @@ public class OptimizationViewModel extends ViewModel implements OptimizationResp
      * Clear Solution repository and MapboxDirectionsRoute repository
      */
     public void clearSolutionsAndDirections() {
-        alterRepositoryUseCase.invoke(OnRepositoryUpdate.Event.ACTION_CLEAR, new MapboxDirectionsRoute(), false);
+        clearMapboxDirectionsRoute();
         alterRepositoryUseCase.invoke(OnRepositoryUpdate.Event.ACTION_CLEAR, new Solution(), false);
     }
 
@@ -344,8 +341,8 @@ public class OptimizationViewModel extends ViewModel implements OptimizationResp
         solutionRepository.setRecords(solutions, true);
         solutionRepository.assignRouteIndex();
 
-        // Clear mapbox directions routes and its lines
-        alterRepositoryUseCase.invoke(OnRepositoryUpdate.Event.ACTION_CLEAR, new MapboxDirectionsRoute(), false);
+        //
+        clearMapboxDirectionsRoute();
 
         new MaterialAlertDialogBuilder(context)
                 .setTitle("Find Directions")
@@ -425,38 +422,23 @@ public class OptimizationViewModel extends ViewModel implements OptimizationResp
 
         syncOptimizationSession(); // Sync session
 
+//        clearMapboxDirectionsRoute();
+
         // Re/set new solution to repository
         solutionRepository.setRecords(event.getSolutions(), true);
         solutionRepository.assignRouteIndex();
 
-        // Clear mapbox directions routes and its lines
+        EventBus.getDefault().post(new OnProgressIndicatorUpdate(100, OnProgressIndicatorUpdate.Event.OPTIMIZATION_FINISHED));
+        Log.d(TAG, "OnOptimizationResponse: Optimization finished with default method.");
+
+    }
+
+    /**
+     * Clear mapbox directions routes and its lines
+     */
+    private void clearMapboxDirectionsRoute() {
         alterRepositoryUseCase.invoke(OnRepositoryUpdate.Event.ACTION_CLEAR, new MapboxDirectionsRoute(), false);
-
-        // If not using advanced algorithms, skip find directions
-        Boolean useAdvancedAlgorithm = RouteMatePref.readOptimizationIsAdvancedAlgorithm((Activity) context);
-
-        if (!useAdvancedAlgorithm) {
-            EventBus.getDefault().post(new OnProgressIndicatorUpdate(100, OnProgressIndicatorUpdate.Event.OPTIMIZATION_FINISHED));
-            Log.d(TAG, "OnDSMSolverOptimizationResponse: Optimization finished with default method.");
-            return;
-        }
-
-        new MaterialAlertDialogBuilder(context)
-                .setTitle("Find Directions")
-                .setMessage("Proceed to find directions? (This action might consumes data)")
-                .setPositiveButton("Yes", (dialogInterface, i) -> {
-                    // Fetch directions from Mapbox
-                    requestMapboxDirectionsRouteUseCase.invoke(solutionRepository.getRecords(), DirectionsCriteria.PROFILE_DRIVING);
-                })
-                .setNeutralButton("Cancel", null)
-                .setOnDismissListener(dialogInterface -> {
-                    // Cancel will finish the process and set the progressIndicator to 100
-                    EventBus.getDefault().post(new OnProgressIndicatorUpdate(100));
-                })
-                .show();
-
-        Log.d(TAG, "OnDSMSolverOptimizationResponse: Optimization finished.");
-
+//        mapboxDirectionsRouteRepository.clearRecord();
     }
 
     // TODO: Move

@@ -4,7 +4,7 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 
 public class OnMapboxGeocodingResponse {
 

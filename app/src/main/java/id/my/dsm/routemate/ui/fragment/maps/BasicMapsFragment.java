@@ -6,31 +6,32 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.mapbox.mapboxsdk.maps.MapView;
+import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 
+import javax.inject.Inject;
+
+import id.my.dsm.routemate.data.repo.mapbox.MapboxDirectionsRouteRepository;
 import id.my.dsm.routemate.databinding.FragmentBasicMapsBinding;
 import id.my.dsm.routemate.ui.fragment.viewmodel.MapsViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BasicMapsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BasicMapsFragment extends Fragment {
 
+    private static final String TAG = BasicMapsFragment.class.getSimpleName();
     private FragmentBasicMapsBinding binding;
     private MapView mapView;
 
     // Dependencies
     private MapsViewModel mapsViewModel;
 
-    public static BasicMapsFragment newInstance(String param1, String param2) {
-        return new BasicMapsFragment();
-    }
+    @Inject
+    MapboxDirectionsRouteRepository mapboxDirectionsRouteRepository;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,13 @@ public class BasicMapsFragment extends Fragment {
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(mapsViewModel);
         mapsViewModel.provideMapView(mapView); // Inject dependency to viewModel ASAP
+
+        assert getArguments() != null;
+        boolean redrawMapboxDirectionsRouteLines = getArguments().getBoolean("redrawMapboxDirectionsRouteLines");
+
+        // Check if directionsRoute needs to be redrawn by request from reloadMap()
+//        if (redrawMapboxDirectionsRouteLines)
+            mapView.addOnDidFinishLoadingStyleListener(() -> mapsViewModel.drawCachedDirectionsRoute());
 
         return binding.getRoot();
 

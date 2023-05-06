@@ -16,15 +16,15 @@ import org.greenrobot.eventbus.ThreadMode;
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import id.my.dsm.routemate.data.enums.MapsAPI;
 import id.my.dsm.routemate.data.event.viewmodel.OnDistancesViewModelRequest;
 import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
-import id.my.dsm.routemate.library.dsmlib.DSMSolver;
-import id.my.dsm.routemate.library.dsmlib.enums.DistancesMethod;
-import id.my.dsm.routemate.data.enums.MapsAPI;
 import id.my.dsm.routemate.ui.model.RouteMatePref;
 import id.my.dsm.routemate.usecase.distance.RequestDistanceMatrixUseCase;
+import id.my.dsm.vrpsolver.DSMSolver;
+import id.my.dsm.vrpsolver.enums.DistancesMethod;
 
 @HiltViewModel
 public class DistancesViewModel extends ViewModel {
@@ -41,7 +41,7 @@ public class DistancesViewModel extends ViewModel {
     @Inject
     PlaceRepositoryN placeRepository;
     @Inject
-    VehicleRepositoryN vehicleRepository;
+    FleetRepository vehicleRepository;
     @Inject
     RequestDistanceMatrixUseCase requestDistanceMatrixUseCase;
     @SuppressLint("StaticFieldLeak")

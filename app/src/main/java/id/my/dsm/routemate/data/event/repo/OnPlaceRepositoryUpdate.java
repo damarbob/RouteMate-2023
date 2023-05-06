@@ -2,7 +2,7 @@ package id.my.dsm.routemate.data.event.repo;
 
 import androidx.annotation.NonNull;
 
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 
 public final class OnPlaceRepositoryUpdate extends OnRepositoryUpdate<Place> {
 

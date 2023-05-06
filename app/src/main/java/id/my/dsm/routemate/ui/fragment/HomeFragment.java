@@ -1,8 +1,5 @@
 package id.my.dsm.routemate.ui.fragment;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,8 +16,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -41,10 +36,10 @@ import id.my.dsm.routemate.data.event.view.OnMainActivityShowCaseRequest;
 import id.my.dsm.routemate.data.model.user.DSMPlan;
 import id.my.dsm.routemate.data.model.user.DSMUser;
 import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
 import id.my.dsm.routemate.data.repo.user.UserRepository;
 import id.my.dsm.routemate.data.repo.user.UserStatus;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
 import id.my.dsm.routemate.databinding.FragmentHomeBinding;
 import id.my.dsm.routemate.ui.fragment.viewmodel.HomeViewModel;
 import id.my.dsm.routemate.ui.model.MaterialDialogTemplate;
@@ -68,7 +63,7 @@ public class HomeFragment extends Fragment {
     @Inject
     PlaceRepositoryN placeRepository;
     @Inject
-    VehicleRepositoryN vehicleRepository;
+    FleetRepository vehicleRepository;
     @Inject
     DistanceRepositoryN distanceRepository;
     private HomeViewModel mViewModel;
@@ -114,10 +109,6 @@ public class HomeFragment extends Fragment {
                     mainMenuItemMatrix
             )
     );
-
-    public static HomeFragment newInstance() {
-        return new HomeFragment();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -291,6 +282,11 @@ public class HomeFragment extends Fragment {
         super.onStop();
 
         EventBus.getDefault().unregister(this); // Unregister to event
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     // Subscribe to OnUserStatusChangedEvent event

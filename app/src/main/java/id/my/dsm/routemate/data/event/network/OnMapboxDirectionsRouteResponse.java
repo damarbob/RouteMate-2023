@@ -3,7 +3,7 @@ package id.my.dsm.routemate.data.event.network;
 import androidx.annotation.NonNull;
 
 import id.my.dsm.routemate.data.model.maps.MapboxDirectionsRoute;
-import id.my.dsm.routemate.library.dsmlib.model.Solution;
+import id.my.dsm.vrpsolver.model.Solution;
 
 public final class OnMapboxDirectionsRouteResponse extends OnResponse<MapboxDirectionsRoute> {
 

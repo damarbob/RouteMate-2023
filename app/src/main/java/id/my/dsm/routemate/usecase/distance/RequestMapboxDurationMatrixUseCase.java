@@ -14,10 +14,10 @@ import javax.inject.Inject;
 
 import id.my.dsm.routemate.data.event.network.OnDistanceMatrixResponse;
 import id.my.dsm.routemate.data.event.view.OnProgressIndicatorUpdate;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
+import id.my.dsm.vrpsolver.model.MatrixElement;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -74,7 +74,7 @@ public class RequestMapboxDurationMatrixUseCase {
                                     finalConvertedFormattedDistance = distanceValue;
 
                                     // Insert new matrixElement into record list
-                                    MatrixElement matrixElement = new MatrixElement(placeFrom.getDsmPlace(), placeTo.getDsmPlace(), durationsToAllOfTheLocationsFromTheOrigin.get(originIndex)[destinationIndex]);
+                                    MatrixElement matrixElement = new MatrixElement(placeFrom.getLocation(), placeTo.getLocation(), durationsToAllOfTheLocationsFromTheOrigin.get(originIndex)[destinationIndex]);
                                     distanceRepository.createRecord(matrixElement);
 
                                 }

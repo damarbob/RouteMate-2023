@@ -28,15 +28,15 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import id.my.dsm.routemate.R;
-import id.my.dsm.routemate.data.event.view.OnBottomSheetStateChanged;
+import id.my.dsm.routemate.data.enums.MapsAPI;
 import id.my.dsm.routemate.data.event.repo.OnVehicleRepositoryUpdate;
+import id.my.dsm.routemate.data.event.view.OnBottomSheetStateChanged;
+import id.my.dsm.routemate.data.model.fleet.Fleet;
 import id.my.dsm.routemate.data.model.user.DSMPlan;
 import id.my.dsm.routemate.data.repo.distance.SolutionRepositoryN;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
 import id.my.dsm.routemate.data.repo.user.UserRepository;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
 import id.my.dsm.routemate.databinding.FragmentVehiclesBinding;
-import id.my.dsm.routemate.data.enums.MapsAPI;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
 import id.my.dsm.routemate.ui.fragment.viewmodel.VehiclesViewModel;
 import id.my.dsm.routemate.ui.model.IntroShowCase;
 import id.my.dsm.routemate.ui.model.OptionsMenu;
@@ -44,6 +44,7 @@ import id.my.dsm.routemate.ui.model.RouteMateNavigation;
 import id.my.dsm.routemate.ui.model.RouteMatePref;
 import id.my.dsm.routemate.ui.recyclerview.VehicleRecViewAdapter;
 import id.my.dsm.routemate.usecase.repository.AlterRepositoryUseCase;
+import id.my.dsm.vrpsolver.model.Vehicle;
 
 @AndroidEntryPoint
 public class VehiclesFragment extends Fragment {
@@ -55,7 +56,7 @@ public class VehiclesFragment extends Fragment {
     @Inject
     UserRepository userRepository;
     @Inject
-    VehicleRepositoryN vehicleRepository;
+    FleetRepository vehicleRepository;
     @Inject
     SolutionRepositoryN solutionRepositoryN;
     private VehiclesViewModel mViewModel;
@@ -157,7 +158,14 @@ public class VehiclesFragment extends Fragment {
         // Set up listeners
         binding.buttonVehiclesAdd.setOnClickListener(v -> {
             // TODO: Customizable add vehicle
-            mViewModel.createVehicle(new Vehicle("Vehicle", Vehicle.MapboxProfile.DRIVING_TRAFFIC, 1));
+            mViewModel.createVehicle(
+                    new Fleet(
+                            "Vehicle",
+                            new Vehicle.Builder()
+                                    .withDefault(true)
+                                    .build()
+                    )
+            );
             RouteMateNavigation.navigateToVehiclesEdit(
                     NavHostFragment.findNavController(this),
                     vehicleRepository.getRecordsCount() - 1

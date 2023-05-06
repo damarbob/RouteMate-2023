@@ -23,10 +23,10 @@ import id.my.dsm.routemate.R;
 import id.my.dsm.routemate.data.event.model.OnSelectedPlaceChangedEvent;
 import id.my.dsm.routemate.data.event.repo.OnRepositoryUpdate;
 import id.my.dsm.routemate.data.event.viewmodel.OnMapsViewModelRequest;
-import id.my.dsm.routemate.data.place.Place;
-import id.my.dsm.routemate.library.dsmlib.model.Location;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.ui.model.OptionsMenu;
 import id.my.dsm.routemate.usecase.repository.AlterRepositoryUseCase;
+import id.my.dsm.vrpsolver.model.Location;
 
 public class PlaceRecViewAdapter extends RecyclerView.Adapter<PlaceRecViewAdapter.ViewHolder> {
 
@@ -62,10 +62,10 @@ public class PlaceRecViewAdapter extends RecyclerView.Adapter<PlaceRecViewAdapte
 
         // Set the item's content matching the position/index here
         Place place = objects.get(position);
-        Location location = place.getDsmPlace();
+        Location location = place.getLocation();
 
         holder.imagePlacesListIcon.setImageResource(
-                place.getDsmPlace().getProfile() == Location.Profile.SOURCE ?
+                place.getLocation().getProfile() == Location.Profile.SOURCE ?
                         R.drawable.ic_app_warehouse : R.drawable.ic_app_pin_drop);
 
         holder.textPlacesListTitle.setText(place.getName());
@@ -73,7 +73,7 @@ public class PlaceRecViewAdapter extends RecyclerView.Adapter<PlaceRecViewAdapte
         holder.layoutPlacesListDemand.setVisibility(location.getProfile() == Location.Profile.SOURCE ? View.GONE : location.getDemands() > 0 ? View.VISIBLE : View.GONE);
         holder.textPlacesListDemand.setText(NumberFormat.getInstance().format(location.getDemands()));
 
-        holder.textPlacesListProfileValue.setText(place.getDsmPlace().getProfile().toString());
+        holder.textPlacesListProfileValue.setText(place.getLocation().getProfile().toString());
         holder.textPlacesListDemandsValue.setText("" + location.getDemands());
 
         holder.textPlacesListDebugId.setText("" + place.getId());

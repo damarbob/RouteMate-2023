@@ -19,10 +19,10 @@ import javax.inject.Inject;
 
 import id.my.dsm.routemate.data.event.network.OnDistanceMatrixResponse;
 import id.my.dsm.routemate.data.event.view.OnProgressIndicatorUpdate;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
+import id.my.dsm.vrpsolver.model.MatrixElement;
 
 public class RequestGoogleDistanceMatrixUseCase {
 
@@ -120,7 +120,7 @@ public class RequestGoogleDistanceMatrixUseCase {
                         Log.d(TAG, "invoke: distanceValues: " + distanceValues);
 
                         // Assign listed response matrixElements into existing distance objects
-                        List<MatrixElement> distancesWithOrigin = distanceRepository.filterByOrigin(p.getDsmPlace());
+                        List<MatrixElement> distancesWithOrigin = distanceRepository.filterByOrigin(p.getLocation());
 
                         for (int j = 0; j < distancesWithOrigin.size(); j++) {
                             MatrixElement d = distancesWithOrigin.get(j);

@@ -21,13 +21,17 @@ import java.util.Objects;
 import javax.inject.Inject;
 
 import id.my.dsm.routemate.BuildConfig;
+import id.my.dsm.routemate.data.enums.MapboxProfile;
 import id.my.dsm.routemate.data.event.network.OnMapboxDirectionsRouteResponse;
-import id.my.dsm.routemate.data.model.maps.MapboxDirectionsRoute;
-import id.my.dsm.routemate.data.place.Place;
 import id.my.dsm.routemate.data.event.network.OnOptimizationResponse;
-import id.my.dsm.routemate.library.dsmlib.model.Location;
-import id.my.dsm.routemate.library.dsmlib.model.Solution;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
+import id.my.dsm.routemate.data.event.repo.OnRepositoryUpdate;
+import id.my.dsm.routemate.data.model.fleet.Fleet;
+import id.my.dsm.routemate.data.model.maps.MapboxDirectionsRoute;
+import id.my.dsm.routemate.data.model.place.Place;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
+import id.my.dsm.routemate.usecase.repository.AlterRepositoryUseCase;
+import id.my.dsm.vrpsolver.model.Location;
+import id.my.dsm.vrpsolver.model.Solution;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,10 +41,16 @@ public class RequestMapboxOptimizationUseCase {
     private static final String TAG = RequestMapboxOptimizationUseCase.class.getSimpleName();
 
     @Inject
-    public RequestMapboxOptimizationUseCase() {
+    FleetRepository fleetRepository;
+    @Inject
+    AlterRepositoryUseCase alterRepositoryUseCase;
+
+    @Inject
+    public RequestMapboxOptimizationUseCase(FleetRepository fleetRepository) {
+        this.fleetRepository = fleetRepository;
     }
 
-    public void invoke(@NonNull List<Place> places, @NonNull List<Vehicle> vehicles, boolean isRoundTrip) {
+    public void invoke(@NonNull List<Place> places, boolean isRoundTrip) {
 
         /*
             The following line of code is for sorting the places to be the source first.
@@ -67,8 +77,8 @@ public class RequestMapboxOptimizationUseCase {
 
             mapboxProfile: driving, walking, cycling, driving-traffic
          */
-        Vehicle defaultVehicle = Vehicle.Toolbox.getDefaultVehicle(vehicles);
-        String mapboxProfile = defaultVehicle == null ? Vehicle.MapboxProfile.DRIVING.toDirectionsCriteria() : defaultVehicle.getMapboxProfile().toDirectionsCriteria();
+        Fleet defaultVehicle = fleetRepository.getDefaultVehicle();
+        String mapboxProfile = defaultVehicle == null ? MapboxProfile.DRIVING.toDirectionsCriteria() : defaultVehicle.getMapboxProfile().toDirectionsCriteria();
 
         /*
             Adapt sorted places into acceptable Mapbox coordinates format.
@@ -183,6 +193,8 @@ public class RequestMapboxOptimizationUseCase {
                     s.setVehicleId(defaultVehicle.getId());
 
                 Log.d(TAG, "computeDefault: solutions: " + solutions.size());
+
+                alterRepositoryUseCase.invoke(OnRepositoryUpdate.Event.ACTION_CLEAR, new MapboxDirectionsRoute(), false);
 
                 // Post solution distances response
                 EventBus.getDefault().post(

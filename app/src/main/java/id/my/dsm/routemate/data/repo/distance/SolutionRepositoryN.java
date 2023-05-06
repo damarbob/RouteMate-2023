@@ -16,8 +16,8 @@ import dagger.hilt.components.SingletonComponent;
 import id.my.dsm.routemate.data.event.repo.OnRepositoryUpdate;
 import id.my.dsm.routemate.data.event.repo.OnSolutionRepositoryUpdate;
 import id.my.dsm.routemate.data.repo.Repository;
-import id.my.dsm.routemate.library.dsmlib.enums.OptimizationMethod;
-import id.my.dsm.routemate.library.dsmlib.model.Solution;
+import id.my.dsm.vrpsolver.enums.OptimizationMethod;
+import id.my.dsm.vrpsolver.model.Solution;
 
 @Module
 @InstallIn(SingletonComponent.class)

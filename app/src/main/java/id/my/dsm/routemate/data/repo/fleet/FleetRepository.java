@@ -1,4 +1,4 @@
-package id.my.dsm.routemate.data.repo.vehicle;
+package id.my.dsm.routemate.data.repo.fleet;
 
 import androidx.annotation.NonNull;
 
@@ -6,7 +6,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.Nullable;
 import javax.inject.Singleton;
@@ -17,20 +16,27 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 import id.my.dsm.routemate.data.event.repo.OnRepositoryUpdate;
 import id.my.dsm.routemate.data.event.repo.OnVehicleRepositoryUpdate;
+import id.my.dsm.routemate.data.model.fleet.Fleet;
 import id.my.dsm.routemate.data.repo.Repository;
 import id.my.dsm.routemate.data.repo.distance.SolutionRepositoryN;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
 import id.my.dsm.routemate.ui.model.MaterialManager;
+import id.my.dsm.vrpsolver.model.Vehicle;
 
 @Module
 @InstallIn(SingletonComponent.class)
-public class VehicleRepositoryN extends Repository<Vehicle> {
+public class FleetRepository extends Repository<Fleet> {
 
     private final int[] COLOR = MaterialManager.COLOR;
 
-    public VehicleRepositoryN() {
+    public FleetRepository() {
         super();
-        createRecord(new Vehicle("Vehicle", Vehicle.MapboxProfile.DRIVING_TRAFFIC, 1));
+        createRecord(
+                new Fleet(
+                        "Vehicle",
+                        new Vehicle.Builder()
+                                .build()
+                )
+        );
     }
 
     @Override
@@ -47,11 +53,11 @@ public class VehicleRepositoryN extends Repository<Vehicle> {
      * @param record {@link Vehicle} instance
      */
     @Override
-    public void createRecord(Vehicle record) {
-        String uUid = UUID.randomUUID().toString();  // Create unique ID
-        record.setId(uUid); // Assign uid
+    public void createRecord(Fleet record) {
+//        String uUid = UUID.randomUUID().toString();  // Create unique ID
+//        record.setId(uUid); // Assign uid
 
-        record.setDefault(getRecordsCount() == 0); // Set default for first vehicle added
+        record.getVehicle().setDefault(getRecordsCount() == 0); // Set default for first vehicle added
 
         record.setName(record.getName() + " (" + getLastRecordIndex() + ")");
         record.setColor(COLOR[getRecordsCount() % COLOR.length]);
@@ -61,12 +67,12 @@ public class VehicleRepositoryN extends Repository<Vehicle> {
 
     @Singleton
     @Provides
-    public VehicleRepositoryN getInstance() {
-        return new VehicleRepositoryN();
+    public FleetRepository getInstance() {
+        return new FleetRepository();
     }
 
     @Override
-    public void onRecordAdded(Vehicle record) {
+    public void onRecordAdded(Fleet record) {
         EventBus.getDefault().post(
                 new OnVehicleRepositoryUpdate(
                         OnRepositoryUpdate.Event.RECORD_ADDED,
@@ -81,26 +87,26 @@ public class VehicleRepositoryN extends Repository<Vehicle> {
         // Maintain online & default vehicles and clear others
         List<String> onlineVehicleIds = solutionRepository.getOnlineVehiclesId();
 
-        List<Vehicle> onlineVehicles = new ArrayList<>(); // Keep online vehicles in memory
+        List<Fleet> onlineVehicles = new ArrayList<>(); // Keep online vehicles in memory
 
-        for (Vehicle v : getRecords())
+        for (Fleet v : getRecords())
             if (onlineVehicleIds.contains(v.getId()))
                 onlineVehicles.add(v);
 
-        Vehicle defaultVehicle = getDefaultVehicle(); // Keep default vehicle in memory
+        Fleet defaultVehicle = getDefaultVehicle(); // Keep default vehicle in memory
 
         clearRecord();
 
         if (!onlineVehicles.contains(defaultVehicle)) // If default vehicle is NOT in online vehicles
             addRecord(defaultVehicle);
 
-        for (Vehicle v : onlineVehicles)
+        for (Fleet v : onlineVehicles)
             addRecord(v);
 
     }
 
     @Override
-    public void onRecordDeleted(Vehicle record) {
+    public void onRecordDeleted(Fleet record) {
         EventBus.getDefault().post(
                 new OnVehicleRepositoryUpdate(
                         OnRepositoryUpdate.Event.RECORD_DELETED,
@@ -118,14 +124,21 @@ public class VehicleRepositoryN extends Repository<Vehicle> {
         );
     }
 
+    public List<Vehicle> getVehicles() {
+        List<Vehicle> vehicles = new ArrayList<>();
+        for (Fleet f : getRecords())
+            vehicles.add(f.getVehicle());
+        return vehicles;
+    }
+
     /**
      * Get a vehicle by its vehicle index
      * @param vehicleId int of vehicle index
      * @return a {@link Vehicle} instance
      */
     @Nullable
-    public Vehicle getVehicleById(@NonNull String vehicleId) {
-        return Vehicle.Toolbox.getVehicleById(getRecords(), vehicleId);
+    public Fleet getFleetById(@NonNull String vehicleId) {
+        return Fleet.Toolbox.getFleetById(getRecords(), vehicleId);
     }
 
     /**
@@ -133,24 +146,19 @@ public class VehicleRepositoryN extends Repository<Vehicle> {
      * @return a default Vehicle
      */
     @Nullable
-    public Vehicle getDefaultVehicle() {
-        return Vehicle.Toolbox.getDefaultVehicle(getRecords());
+    public Fleet getDefaultVehicle() {
+        Vehicle defaultVehicle = Vehicle.Toolbox.getDefaultVehicle(getVehicles());
+        if (defaultVehicle == null)
+            return null;
+        return getFleetById(defaultVehicle.getId());
     }
 
     /**
      * Set the default vehicle and clear the old
      * @param record Vehicle to be default
      */
-    public void setDefaultVehicle(Vehicle record) {
-        Vehicle.Toolbox.setDefaultVehicle(getRecords(), record);
-    }
-
-    /**
-     * Clear the default TODO Future: Deprecated, remove
-     * @param record default Vehicle
-     */
-    public void clearDefaultVehicle(Vehicle record) {
-        Vehicle.Toolbox.clearDefaultVehicle(record);
+    public void switchDefaultVehicle(Fleet record) {
+        Vehicle.Toolbox.switchDefaultVehicle(getVehicles(), record.getVehicle());
     }
 
 }

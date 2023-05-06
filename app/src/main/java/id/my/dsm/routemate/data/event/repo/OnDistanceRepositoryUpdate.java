@@ -2,7 +2,7 @@ package id.my.dsm.routemate.data.event.repo;
 
 import androidx.annotation.NonNull;
 
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
+import id.my.dsm.vrpsolver.model.MatrixElement;
 
 public final class OnDistanceRepositoryUpdate extends OnRepositoryUpdate<MatrixElement> {
 

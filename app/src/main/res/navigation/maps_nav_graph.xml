@@ -16,5 +16,9 @@
             app:enterAnim="@anim/scale_up"
             app:popUpTo="@id/basicMapsFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="redrawMapboxDirectionsRouteLines"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
 </navigation>

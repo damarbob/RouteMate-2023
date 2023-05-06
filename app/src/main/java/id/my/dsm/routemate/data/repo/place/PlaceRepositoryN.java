@@ -15,15 +15,15 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 import id.my.dsm.routemate.data.event.repo.OnPlaceRepositoryUpdate;
 import id.my.dsm.routemate.data.event.repo.OnRepositoryUpdate;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.data.repo.Repository;
-import id.my.dsm.routemate.library.dsmlib.model.Location;
+import id.my.dsm.vrpsolver.model.Location;
 
 @Module
 @InstallIn(SingletonComponent.class)
 public class PlaceRepositoryN extends Repository<Place> {
 
-//    private static final String TAG = PlaceRepositoryN.class.getName();
+    private static final String TAG = PlaceRepositoryN.class.getSimpleName();
 
     public PlaceRepositoryN() {
         super();
@@ -80,19 +80,14 @@ public class PlaceRepositoryN extends Repository<Place> {
     @Override
     public void createRecord(@NonNull Place record) {
 
-//        Timestamp timestamp = new Timestamp(System.currentTimeMillis()); // Uses timestamp as id (might be improved in future)
-
-//        record.setIndex(getLastRecordIndex());
-//        record.setId("PLACE_" + timestamp.getTime());
-
         // In case of geocoded places, description and note are not empty. So do not overwrite.
         if (record.getDescription() == null)
             record.setDescription(record.getName() + " is a place where goods distributed");
         if (record.getNote() == null)
             record.setNote("No note");
 
-        addRecord(record);
         record.setName(record.getName() + " (" + getLastRecordIndex() + ")");
+        addRecord(record);
 
     }
 
@@ -166,7 +161,7 @@ public class PlaceRepositoryN extends Repository<Place> {
         List<Location> locations = new ArrayList<>();
 
         for (Place o : getRecords())
-            locations.add(o.getDsmPlace());
+            locations.add(o.getLocation());
 
         return locations;
     }

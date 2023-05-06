@@ -21,18 +21,18 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import id.my.dsm.routemate.R;
 import id.my.dsm.routemate.data.event.viewmodel.OnMapsViewModelRequest;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.data.model.user.DSMPlan;
 import id.my.dsm.routemate.data.model.user.DSMUser;
-import id.my.dsm.routemate.data.place.Place;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
 import id.my.dsm.routemate.data.repo.user.UserRepository;
 import id.my.dsm.routemate.databinding.FragmentPlacesEditBinding;
-import id.my.dsm.routemate.library.dsmlib.DSMSolver;
-import id.my.dsm.routemate.library.dsmlib.enums.OptimizationMethod;
-import id.my.dsm.routemate.library.dsmlib.model.Location;
-import id.my.dsm.routemate.library.dsmlib.model.LatLngAlt;
 import id.my.dsm.routemate.ui.model.RouteMatePref;
 import id.my.dsm.routemate.usecase.userdata.UploadUserDataUseCase;
+import id.my.dsm.vrpsolver.DSMSolver;
+import id.my.dsm.vrpsolver.enums.OptimizationMethod;
+import id.my.dsm.vrpsolver.model.LatLngAlt;
+import id.my.dsm.vrpsolver.model.Location;
 
 @AndroidEntryPoint
 public class
@@ -77,7 +77,7 @@ PlacesEditFragment extends Fragment {
         binding.autocompletePlacesProfile.setAdapter(adapter);
 
         // Refresh contents
-        Location location = place.getDsmPlace();
+        Location location = place.getLocation();
         boolean isBypassDemands = place.isBypassDemands();
 
         binding.editTextLatitude.setText(String.valueOf(location.getLatLngAlt().getLatitude()));
@@ -109,7 +109,7 @@ PlacesEditFragment extends Fragment {
 
         String placeId = PlacesEditFragmentArgs.fromBundle(getArguments()).getPlaceId();
         place = placeRepository.getById(placeId);
-        location = place.getDsmPlace();
+        location = place.getLocation();
 
         // Adjust layout based on user's plan
         DSMUser dsmUser = userRepository.getDsmUser();

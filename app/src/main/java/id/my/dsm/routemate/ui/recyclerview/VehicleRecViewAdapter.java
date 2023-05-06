@@ -30,22 +30,23 @@ import java.text.NumberFormat;
 import java.util.List;
 
 import id.my.dsm.routemate.R;
+import id.my.dsm.routemate.data.enums.MapsAPI;
 import id.my.dsm.routemate.data.event.repo.OnRepositoryUpdate;
 import id.my.dsm.routemate.data.event.viewmodel.OnMapsViewModelRequest;
+import id.my.dsm.routemate.data.model.fleet.Fleet;
 import id.my.dsm.routemate.data.model.user.DSMPlan;
 import id.my.dsm.routemate.data.repo.distance.SolutionRepositoryN;
-import id.my.dsm.routemate.data.enums.MapsAPI;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
 import id.my.dsm.routemate.ui.model.MaterialManager;
 import id.my.dsm.routemate.ui.model.OptionsMenu;
 import id.my.dsm.routemate.usecase.repository.AlterRepositoryUseCase;
+import id.my.dsm.vrpsolver.model.Vehicle;
 
 public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAdapter.ViewHolder> {
 
     private static final String TAG = VehicleRecViewAdapter.class.getName();
 
     // Dependencies
-    private final List<Vehicle> objects;
+    private final List<Fleet> objects;
     private final SolutionRepositoryN solutionRepository;
     private final NavController navController;
     private final Context context;
@@ -55,7 +56,7 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
     // Use case
     private final AlterRepositoryUseCase alterRepositoryUseCase;
 
-    public VehicleRecViewAdapter(List<Vehicle> objects, AlterRepositoryUseCase alterRepositoryUseCase, SolutionRepositoryN solutionRepository, NavController navController, MapsAPI mapsAPI, DSMPlan plan) {
+    public VehicleRecViewAdapter(List<Fleet> objects, AlterRepositoryUseCase alterRepositoryUseCase, SolutionRepositoryN solutionRepository, NavController navController, MapsAPI mapsAPI, DSMPlan plan) {
         this.objects = objects;
         this.alterRepositoryUseCase = alterRepositoryUseCase;
         this.solutionRepository = solutionRepository;
@@ -75,10 +76,10 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
         return holder;
     }
 
-    // Check whether a certain vehicle is used in solution
-    private boolean isVehicleOnline(Vehicle vehicle) {
+    // Check whether a certain fleet is used in solution
+    private boolean isVehicleOnline(Fleet fleet) {
         List<String> onlineVehicleId = solutionRepository.getOnlineVehiclesId();
-        return onlineVehicleId.contains(vehicle.getId());
+        return onlineVehicleId.contains(fleet.getId());
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -86,7 +87,8 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         // Set the item's content matching the position/index here
-        Vehicle vehicle = objects.get(position);
+        Fleet fleet = objects.get(position);
+        Vehicle vehicle = fleet.getVehicle();
 
         // Adjust layout based on plan
         if (plan == DSMPlan.FREE)
@@ -94,13 +96,13 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
 
         // Display the profile depending on the selected MapsAPI
         CharSequence vehicleProfile = mapsAPI == MapsAPI.MAPBOX ?
-                vehicle.getMapboxProfile().toPrettyString(context.getResources()) :
-                vehicle.getGoogleProfile().toPrettyString(context.getResources());
+                fleet.getMapboxProfile().toPrettyString(context.getResources()) :
+                fleet.getGoogleProfile().toPrettyString(context.getResources());
 
-        // Change icon based on the vehicle profile
+        // Change icon based on the fleet profile
         switch (mapsAPI) {
             case MAPBOX:
-                switch (vehicle.getMapboxProfile()) {
+                switch (fleet.getMapboxProfile()) {
                     case DRIVING:
                         holder.imageVehiclesListIcon.setImageResource(R.drawable.ic_app_local_shipping);
                         break;
@@ -116,7 +118,7 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
                 }
                 break;
             case GOOGLE:
-                switch (vehicle.getGoogleProfile()) {
+                switch (fleet.getGoogleProfile()) {
                     case DRIVING:
                         holder.imageVehiclesListIcon.setImageResource(R.drawable.ic_app_local_shipping);
                         break;
@@ -133,13 +135,13 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
                 break;
         }
 
-        MaterialManager.setButtonColor(holder.buttonVehiclesListVehicleColor, vehicle.getColor()); // Vehicle color
-        holder.textVehiclesListTitle.setText(vehicle.getName());
+        MaterialManager.setButtonColor(holder.buttonVehiclesListVehicleColor, fleet.getColor()); // Vehicle color
+        holder.textVehiclesListTitle.setText(fleet.getName());
         holder.textVehiclesListCapacity.setText(String.valueOf(NumberFormat.getInstance().format(vehicle.getCapacity())));
         holder.layoutVehiclesListIsDefault.setVisibility(vehicle.isDefault() ? VISIBLE : GONE);
         holder.textVehiclesListProfileValue.setText(vehicleProfile);
 
-        if (!isVehicleOnline(vehicle))
+        if (!isVehicleOnline(fleet))
             holder.imageVehiclesListOnlineIcon.setVisibility(GONE);
 
         holder.cardVehiclesList.setOnClickListener(v -> {
@@ -147,7 +149,7 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
             Bundle bundle = new Bundle();
             bundle.putInt("vehicleIndex", position);
             navController.navigate(R.id.action_global_vehiclesEditFragment, bundle);
-            Log.e(TAG, "Vehicle: " + vehicle);
+            Log.e(TAG, "Vehicle: " + fleet);
         });
         holder.cardVehiclesList.setOnLongClickListener(v -> {
             // Show places menu options
@@ -158,21 +160,21 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
                 switch (item.getItemId()) {
                     case R.id.vehicle_set_default_item:
                         if (vehicle.isDefault()) {
-                            Toast.makeText(context, "The vehicle is already default", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "The fleet is already default", Toast.LENGTH_SHORT).show();
                             break;
                         }
                         // Post repository event
-                        alterRepositoryUseCase.invoke(OnRepositoryUpdate.Event.ACTION_SET_DEFAULT, vehicle, true);
+                        alterRepositoryUseCase.invoke(OnRepositoryUpdate.Event.ACTION_SET_DEFAULT, fleet, true);
                         notifyItemRangeChanged(0, objects.size()); // Notify specific item has changed
                         break;
                     case R.id.vehicle_delete_item:
                         if (!vehicle.isDefault()) {
                             // Post repository event
-                            alterRepositoryUseCase.invoke(OnRepositoryUpdate.Event.ACTION_DELETE, vehicle, true);
+                            alterRepositoryUseCase.invoke(OnRepositoryUpdate.Event.ACTION_DELETE, fleet, true);
                             notifyItemRemoved(position); // Notify item removed
                         }
                         else
-                            Toast.makeText(context, "Unable to delete default vehicle!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Unable to delete default fleet!", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return true;
@@ -185,7 +187,7 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
             ColorPickerDialogBuilder
                     .with(context)
                     .setTitle("Choose Vehicle Route Color")
-                    .initialColor(vehicle.getColor())
+                    .initialColor(fleet.getColor())
                     .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
                     .density(12)
                     .setOnColorSelectedListener(selectedColor -> {
@@ -194,14 +196,14 @@ public class VehicleRecViewAdapter extends RecyclerView.Adapter<VehicleRecViewAd
                     .setPositiveButton("Apply", (dialog, selectedColor, allColors) -> {
 
                         // Previous state
-                        int previousVehicleColor = vehicle.getColor();
+                        int previousVehicleColor = fleet.getColor();
 
                         // Save changes
-                        vehicle.setColor(selectedColor);
+                        fleet.setColor(selectedColor);
                         notifyItemChanged(position);
 
                         // Apply changes on the map if any
-                        if (vehicle.getColor() != previousVehicleColor)
+                        if (fleet.getColor() != previousVehicleColor)
                             EventBus.getDefault().post(
                                     new OnMapsViewModelRequest
                                             .Builder(OnMapsViewModelRequest.Event.ACTION_RELOAD_MAP)

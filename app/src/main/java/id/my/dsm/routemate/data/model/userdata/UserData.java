@@ -4,12 +4,12 @@ import com.google.firebase.database.Exclude;
 
 import java.util.List;
 
+import id.my.dsm.routemate.data.model.fleet.Fleet;
 import id.my.dsm.routemate.data.model.maps.MapboxDirectionsRoute;
-import id.my.dsm.routemate.data.place.Place;
-import id.my.dsm.routemate.library.dsmlib.enums.OptimizationMethod;
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
-import id.my.dsm.routemate.library.dsmlib.model.Solution;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
+import id.my.dsm.routemate.data.model.place.Place;
+import id.my.dsm.vrpsolver.enums.OptimizationMethod;
+import id.my.dsm.vrpsolver.model.MatrixElement;
+import id.my.dsm.vrpsolver.model.Solution;
 
 /**
  * UserData model that is used for saving the user's data remotely
@@ -19,7 +19,7 @@ public class UserData {
     private String uid;
     private String name; // Data Name
     private List<Place> places;
-    private List<Vehicle> vehicles;
+    private List<Fleet> fleets;
     private List<MatrixElement> matrix;
     private List<Solution> solutions;
     private List<MapboxDirectionsRoute> mapboxDirectionsRoutes;
@@ -34,7 +34,7 @@ public class UserData {
         this.uid = builder.uid;
         this.name = builder.name;
         this.places = builder.places;
-        this.vehicles = builder.vehicles;
+        this.fleets = builder.fleets;
         this.matrix = builder.matrix;
         this.solutions = builder.solutions;
         this.mapboxDirectionsRoutes = builder.mapboxDirectionsRoutes;
@@ -54,8 +54,8 @@ public class UserData {
         return places;
     }
 
-    public List<Vehicle> getVehicles() {
-        return vehicles;
+    public List<Fleet> getFleets() {
+        return fleets;
     }
 
     public List<MatrixElement> getMatrix() {
@@ -83,7 +83,7 @@ public class UserData {
         private final String uid;
         private String name;
         private List<Place> places;
-        private List<Vehicle> vehicles;
+        private List<Fleet> fleets;
         private List<MatrixElement> matrix;
         private List<Solution> solutions;
         private List<MapboxDirectionsRoute> mapboxDirectionsRoutes;
@@ -107,8 +107,8 @@ public class UserData {
         }
 
         @Exclude
-        public Builder withVehicles(List<Vehicle> vehicles) {
-            this.vehicles = vehicles;
+        public Builder withVehicles(List<Fleet> fleets) {
+            this.fleets = fleets;
             return this;
         }
 

@@ -9,25 +9,26 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import id.my.dsm.routemate.data.place.Place;
-import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
-import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
-import id.my.dsm.routemate.library.dsmlib.DSMSolver;
-import id.my.dsm.routemate.library.dsmlib.enums.DistancesMethod;
+import id.my.dsm.routemate.data.enums.GoogleProfile;
+import id.my.dsm.routemate.data.enums.MapboxProfile;
 import id.my.dsm.routemate.data.enums.MapsAPI;
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
+import id.my.dsm.routemate.data.model.fleet.Fleet;
+import id.my.dsm.routemate.data.model.place.Place;
+import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
+import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
+import id.my.dsm.vrpsolver.enums.DistancesMethod;
+import id.my.dsm.vrpsolver.model.MatrixElement;
 
 public class RequestDistanceMatrixUseCase {
 
     private static final String TAG = RequestDistanceMatrixUseCase.class.getName();
 
     private final PlaceRepositoryN placeRepository;
-    private final VehicleRepositoryN vehicleRepository;
+    private final FleetRepository vehicleRepository;
     private final DistanceRepositoryN distanceRepository;
     private final List<Place> places;
-    private final List<Vehicle> vehicles;
+    private final List<Fleet> fleets;
     private final List<MatrixElement> matrixElements;
     private final FillAirDistanceMatrixUseCase fillAirDistanceMatrixUseCase;
     private final RequestGoogleDistanceMatrixUseCase requestGoogleDistanceMatrixUseCase;
@@ -37,7 +38,7 @@ public class RequestDistanceMatrixUseCase {
     @Inject
     public RequestDistanceMatrixUseCase(
             PlaceRepositoryN placeRepository,
-            VehicleRepositoryN vehicleRepository,
+            FleetRepository vehicleRepository,
             DistanceRepositoryN distanceRepository,
             FillAirDistanceMatrixUseCase fillAirDistanceMatrixUseCase,
             RequestGoogleDistanceMatrixUseCase requestGoogleDistanceMatrixUseCase,
@@ -47,7 +48,7 @@ public class RequestDistanceMatrixUseCase {
         this.placeRepository = placeRepository;
         places = placeRepository.getRecords();
         this.vehicleRepository = vehicleRepository;
-        vehicles = vehicleRepository.getRecords();
+        fleets = vehicleRepository.getRecords();
         this.distanceRepository = distanceRepository;
         matrixElements = distanceRepository.getRecords();
 
@@ -64,7 +65,7 @@ public class RequestDistanceMatrixUseCase {
                 " | distancesMethod: " + distancesMethod.name() +
                 " | mapsAPI: " + mapsAPI.name());
 
-        Vehicle defaultVehicle = vehicleRepository.getDefaultVehicle();
+        Fleet defaultVehicle = vehicleRepository.getDefaultVehicle();
 
         // TODO: FIX LOGIC
         /*
@@ -73,8 +74,8 @@ public class RequestDistanceMatrixUseCase {
             - Google requires TravelMode as the profile
             for use in the distance matrix API request
          */
-        String mapboxProfile = defaultVehicle == null ? Vehicle.MapboxProfile.DRIVING.toDirectionsCriteria() : defaultVehicle.getMapboxProfile().toDirectionsCriteria();
-        TravelMode googleProfile = defaultVehicle == null ? Vehicle.GoogleProfile.DRIVING.toTravelMode() : defaultVehicle.getGoogleProfile().toTravelMode();
+        String mapboxProfile = defaultVehicle == null ? MapboxProfile.DRIVING.toDirectionsCriteria() : defaultVehicle.getMapboxProfile().toDirectionsCriteria();
+        TravelMode googleProfile = defaultVehicle == null ? GoogleProfile.DRIVING.toTravelMode() : defaultVehicle.getGoogleProfile().toTravelMode();
 
         switch (distancesMethod) {
             case TRAVEL:

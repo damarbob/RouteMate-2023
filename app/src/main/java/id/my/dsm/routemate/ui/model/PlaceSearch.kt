@@ -71,8 +71,9 @@ class PlaceSearch(
 
         // Set Listener
         searchBar.setNavigationOnClickListener {
+            (context as MainActivity)._053803052023(OnMainActivityFeatureRequest(OnMainActivityFeatureRequest.Event.OPEN_DRAWER))
             // Open drawer
-            EventBus.getDefault().post(OnMainActivityFeatureRequest(OnMainActivityFeatureRequest.Event.OPEN_DRAWER))
+//            EventBus.getDefault().post(OnMainActivityFeatureRequest(OnMainActivityFeatureRequest.Event.OPEN_DRAWER))
         }
         searchView.addTransitionListener { searchView, previousState, newState ->
             // Update search state
@@ -82,7 +83,7 @@ class PlaceSearch(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             searchView.editText.setTextCursorDrawable(R.drawable.bg_cursor_text) // Set text cursor
         } else {
-            // Use refleciton for Android version under Q
+            // Use reflection for Android version under Q
             try {
                 // https://github.com/android/platform_frameworks_base/blob/kitkat-release/core/java/android/widget/TextView.java#L562-564
                 @SuppressLint("DiscouragedPrivateApi") val f =

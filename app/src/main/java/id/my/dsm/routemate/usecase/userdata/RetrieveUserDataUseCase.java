@@ -9,7 +9,7 @@ import id.my.dsm.routemate.data.repo.user.UserRepository;
 
 public class RetrieveUserDataUseCase {
 
-    private static final String TAG = "RetrieveUserDataUseCase";
+    private static final String TAG = RetrieveUserDataUseCase.class.getSimpleName();
     private final PlaceRepositoryN placeRepository;
     private final UserRepository userRepository;
 
@@ -27,7 +27,7 @@ public class RetrieveUserDataUseCase {
         if (userRepository.getLiveUser().getValue() != null)
             userRepository.retrieveUserData(userRepository.getLiveUser().getValue().getUid());
         else
-            Log.d(TAG, "show: User unauthorized, cannot retrieve cloud data!");
+            Log.d(TAG, "invoke: User unauthorized, cannot retrieve cloud data!");
     }
 
 }

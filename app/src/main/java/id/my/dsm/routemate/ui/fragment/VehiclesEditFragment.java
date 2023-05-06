@@ -5,15 +5,14 @@ import static android.view.View.VISIBLE;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
@@ -25,18 +24,19 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 import id.my.dsm.routemate.R;
+import id.my.dsm.routemate.data.enums.MapsAPI;
 import id.my.dsm.routemate.data.event.repo.OnRepositoryUpdate;
 import id.my.dsm.routemate.data.event.viewmodel.OnMapsViewModelRequest;
+import id.my.dsm.routemate.data.model.fleet.Fleet;
 import id.my.dsm.routemate.data.model.user.DSMPlan;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
 import id.my.dsm.routemate.data.repo.user.UserRepository;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
 import id.my.dsm.routemate.databinding.FragmentVehiclesEditBinding;
-import id.my.dsm.routemate.data.enums.MapsAPI;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
 import id.my.dsm.routemate.ui.model.MaterialManager;
 import id.my.dsm.routemate.ui.model.RouteMatePref;
 import id.my.dsm.routemate.usecase.repository.AlterRepositoryUseCase;
 import id.my.dsm.routemate.usecase.userdata.UploadUserDataUseCase;
+import id.my.dsm.vrpsolver.model.Vehicle;
 
 @AndroidEntryPoint
 public class VehiclesEditFragment extends Fragment {
@@ -47,7 +47,8 @@ public class VehiclesEditFragment extends Fragment {
     @Inject
     UserRepository userRepository;
     @Inject
-    VehicleRepositoryN vehicleRepository;
+    FleetRepository vehicleRepository;
+    private Fleet fleet;
     private Vehicle vehicle;
     private MapsAPI mapsAPI;
 
@@ -77,14 +78,15 @@ public class VehiclesEditFragment extends Fragment {
 
         // Import values from bundle
         int vehicleIndex = VehiclesEditFragmentArgs.fromBundle(getArguments()).getVehicleIndex();
-        vehicle = vehicleRepository.getRecordByIndex(vehicleIndex);
+        fleet = vehicleRepository.getRecordByIndex(vehicleIndex);
+        vehicle = fleet.getVehicle();
 
         isCreateMode = VehiclesEditFragmentArgs.fromBundle(getArguments()).getIsCreateMode(); // Check if it's create mode (not editing)
 
         // Set vehicleProfileIndex depending on which API is currently used
         vehicleProfileIndex = mapsAPI == MapsAPI.MAPBOX ?
-                Vehicle.Toolbox.convertMapboxProfileToProfileIndex(vehicle.getMapboxProfile()) :
-                Vehicle.Toolbox.convertGoogleProfileToProfileIndex(vehicle.getGoogleProfile());
+                Fleet.Toolbox.convertMapboxProfileToProfileIndex(fleet.getMapboxProfile()) :
+                Fleet.Toolbox.convertGoogleProfileToProfileIndex(fleet.getGoogleProfile());
 
         // Adjust layout based on plan
         binding.textInputVehiclesCapacity.setVisibility(
@@ -107,7 +109,7 @@ public class VehiclesEditFragment extends Fragment {
             ColorPickerDialogBuilder
                     .with(requireContext())
                     .setTitle("Choose Vehicle Route Color")
-                    .initialColor(vehicle.getColor())
+                    .initialColor(fleet.getColor())
                     .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
                     .density(12)
                     .setOnColorSelectedListener(selectedColor -> {
@@ -134,15 +136,15 @@ public class VehiclesEditFragment extends Fragment {
         binding.buttonVehiclesSave.setOnClickListener(view -> {
 
             // Previous state
-            int previousVehicleColor = vehicle.getColor();
+            int previousVehicleColor = fleet.getColor();
 
             // Save new data to current Vehicle object
-            vehicle.setName(String.valueOf(binding.editTextVehiclesName.getText()));
-            vehicle.setColor(binding.buttonVehiclesColor.getBackgroundTintList().getDefaultColor());
+            fleet.setName(String.valueOf(binding.editTextVehiclesName.getText()));
+            fleet.setColor(binding.buttonVehiclesColor.getBackgroundTintList().getDefaultColor());
             vehicle.setCapacity(Double.parseDouble(String.valueOf(binding.editTextVehiclesCapacity.getText())));
 
             // Apply changes on the map if any
-            if (vehicle.getColor() != previousVehicleColor)
+            if (fleet.getColor() != previousVehicleColor)
                 EventBus.getDefault().post(
                         new OnMapsViewModelRequest
                                 .Builder(OnMapsViewModelRequest.Event.ACTION_RELOAD_MAP)
@@ -153,10 +155,10 @@ public class VehiclesEditFragment extends Fragment {
             String profileText = String.valueOf(binding.autocompleteVehiclesProfile.getText());
             switch (mapsAPI) {
                 case GOOGLE:
-                    vehicle.setGoogleProfile(Vehicle.Toolbox.convertProfileIndexToGoogleProfile(vehicleProfileIndex));
+                    fleet.setGoogleProfile(Fleet.Toolbox.convertProfileIndexToGoogleProfile(vehicleProfileIndex));
                     break;
                 case MAPBOX:
-                    vehicle.setMapboxProfile(Vehicle.Toolbox.convertProfileIndexToMapboxProfile(vehicleProfileIndex));
+                    fleet.setMapboxProfile(Fleet.Toolbox.convertProfileIndexToMapboxProfile(vehicleProfileIndex));
                     break;
             }
 
@@ -194,7 +196,7 @@ public class VehiclesEditFragment extends Fragment {
 
         // Delete vehicle if not edited
         if (isCreateMode) {
-            vehicleRepository.deleteRecord(vehicle);
+            vehicleRepository.deleteRecord(fleet);
         }
 
     }
@@ -216,11 +218,11 @@ public class VehiclesEditFragment extends Fragment {
         binding.autocompleteVehiclesProfile.setAdapter(arrayAdapter);
 
         // Display the profile depending on the selected MapsAPI
-        CharSequence vehicleProfile = mapsAPI == MapsAPI.MAPBOX ? vehicle.getMapboxProfile().toPrettyString(getResources()) : vehicle.getGoogleProfile().toPrettyString(getResources());
+        CharSequence vehicleProfile = mapsAPI == MapsAPI.MAPBOX ? fleet.getMapboxProfile().toPrettyString(getResources()) : fleet.getGoogleProfile().toPrettyString(getResources());
 
         // Refresh contents
-        MaterialManager.setButtonColor(binding.buttonVehiclesColor, vehicle.getColor());
-        binding.editTextVehiclesName.setText(vehicle.getName());
+        MaterialManager.setButtonColor(binding.buttonVehiclesColor, fleet.getColor());
+        binding.editTextVehiclesName.setText(fleet.getName());
         binding.editTextVehiclesCapacity.setText(String.valueOf(vehicle.getCapacity()));
         binding.autocompleteVehiclesProfile.setText(vehicleProfile, false);
         binding.checkBoxVehicleDefault.setChecked(vehicleRepository.getRecordsCount() <= 1 ? true : vehicle.isDefault());

@@ -4,7 +4,6 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,27 +38,26 @@ import id.my.dsm.routemate.data.event.repo.OnSolutionRepositoryUpdate;
 import id.my.dsm.routemate.data.event.view.OnBottomSheetStateChanged;
 import id.my.dsm.routemate.data.event.view.OnProgressIndicatorUpdate;
 import id.my.dsm.routemate.data.event.viewmodel.OnMapsViewModelRequest;
+import id.my.dsm.routemate.data.model.fleet.Fleet;
 import id.my.dsm.routemate.data.model.user.DSMPlan;
 import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
 import id.my.dsm.routemate.data.repo.distance.SolutionRepositoryN;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
 import id.my.dsm.routemate.data.repo.mapbox.MapboxDirectionsRouteRepository;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
 import id.my.dsm.routemate.data.repo.user.SessionRepository;
 import id.my.dsm.routemate.data.repo.user.UserRepository;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
 import id.my.dsm.routemate.databinding.FragmentOptimizationBinding;
-import id.my.dsm.routemate.library.dsmlib.enums.OptimizationMethod;
-import id.my.dsm.routemate.library.dsmlib.model.Solution;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
 import id.my.dsm.routemate.ui.fragment.dialog.OptimizationFilterFragment;
 import id.my.dsm.routemate.ui.fragment.viewmodel.MapsViewModel;
 import id.my.dsm.routemate.ui.fragment.viewmodel.OptimizationViewModel;
+import id.my.dsm.routemate.ui.model.DistanceMeasurementUnit;
 import id.my.dsm.routemate.ui.model.IntroShowCase;
 import id.my.dsm.routemate.ui.model.MeasurementConversion;
-import id.my.dsm.routemate.ui.model.DistanceMeasurementUnit;
 import id.my.dsm.routemate.ui.model.OptionsMenu;
 import id.my.dsm.routemate.ui.model.RouteMatePref;
 import id.my.dsm.routemate.ui.recyclerview.SolutionRecViewAdapter;
+import id.my.dsm.vrpsolver.model.Solution;
 
 @AndroidEntryPoint
 public class OptimizationFragment extends Fragment implements OptimizationFilterFragment.OptimizationFilterListener {
@@ -84,7 +82,7 @@ public class OptimizationFragment extends Fragment implements OptimizationFilter
     @Inject
     DistanceRepositoryN distanceRepository;
     @Inject
-    VehicleRepositoryN vehicleRepository;
+    FleetRepository vehicleRepository;
     @Inject
     SolutionRepositoryN solutionRepository;
     @Inject
@@ -222,7 +220,7 @@ public class OptimizationFragment extends Fragment implements OptimizationFilter
 
             ArrayList<String> vehicleNames = new ArrayList<>();
 
-            for (Vehicle v : vehicleRepository.getRecords()) {
+            for (Fleet v : vehicleRepository.getRecords()) {
                 vehicleNames.add(v.getName());
             }
 
@@ -534,7 +532,7 @@ public class OptimizationFragment extends Fragment implements OptimizationFilter
 
     private void filterSolutionByVehicleIndex(int vehicleIndex) {
 
-        Vehicle selectedVehicle = vehicleRepository.getRecords().get(vehicleIndex);
+        Fleet selectedVehicle = vehicleRepository.getRecords().get(vehicleIndex);
 
         // Clear the route lines first, then draw the route lines based on the selected vehicle
         EventBus.getDefault().post(

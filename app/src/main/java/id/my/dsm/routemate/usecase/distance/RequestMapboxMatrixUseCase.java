@@ -16,7 +16,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import id.my.dsm.routemate.BuildConfig;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 import retrofit2.Callback;
 
 public class RequestMapboxMatrixUseCase {

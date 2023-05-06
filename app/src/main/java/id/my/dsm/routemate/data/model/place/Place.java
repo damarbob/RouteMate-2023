@@ -1,4 +1,4 @@
-package id.my.dsm.routemate.data.place;
+package id.my.dsm.routemate.data.model.place;
 
 import android.content.res.Resources;
 
@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import id.my.dsm.routemate.R;
-import id.my.dsm.routemate.library.dsmlib.model.Location;
-import id.my.dsm.routemate.library.dsmlib.model.LatLngAlt;
+import id.my.dsm.vrpsolver.model.LatLngAlt;
+import id.my.dsm.vrpsolver.model.Location;
 
 public class Place {
 
@@ -76,11 +76,11 @@ public class Place {
         this.note = note;
     }
 
-    public Location getDsmPlace() {
+    public Location getLocation() {
         return location;
     }
 
-    public void setDsmPlace(Location location) {
+    public void setLocation(Location location) {
         this.location = location;
         if (location != null)
             this.id = location.getId();
@@ -115,7 +115,7 @@ public class Place {
         // Import string array to adapt localization changes
         String[] profiles = resources.getStringArray(R.array.location_profile);
 
-        switch (this.getDsmPlace().getProfile()) {
+        switch (this.getLocation().getProfile()) {
             case SOURCE:
                 return profiles[0];
             case DESTINATION:
@@ -256,8 +256,8 @@ public class Place {
 
             for (Place o : places) {
 
-                double lat = o.getDsmPlace().getLatLngAlt().getLatitude();
-                double lng = o.getDsmPlace().getLatLngAlt().getLongitude();
+                double lat = o.getLocation().getLatLngAlt().getLatitude();
+                double lng = o.getLocation().getLatLngAlt().getLongitude();
 
                 latLngs.add(
                         new LatLngAlt(lat, lng));
@@ -306,7 +306,7 @@ public class Place {
         /**
          * Create a Place from LatLng
          * @param latLng a LatLng instance
-         * @param mapboxProfile int Place mapboxProfile
+         * @param profile int Place profile
          * @return a new Place instance
          */
         public static Place createObjectiveFromMapboxLatLng(com.mapbox.mapboxsdk.geometry.LatLng latLng, Location.Profile profile) {

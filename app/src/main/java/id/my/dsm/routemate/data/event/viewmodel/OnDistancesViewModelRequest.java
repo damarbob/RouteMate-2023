@@ -5,7 +5,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
+import id.my.dsm.vrpsolver.model.MatrixElement;
 
 public final class OnDistancesViewModelRequest {
 

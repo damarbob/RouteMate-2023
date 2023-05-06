@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.PointF;
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,8 +38,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
@@ -53,18 +52,18 @@ import id.my.dsm.routemate.data.event.repo.OnPlaceRepositoryUpdate;
 import id.my.dsm.routemate.data.event.repo.OnRepositoryUpdate;
 import id.my.dsm.routemate.data.event.viewmodel.OnMapsViewModelRequest;
 import id.my.dsm.routemate.data.model.maps.MapboxDirectionsRoute;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
 import id.my.dsm.routemate.data.repo.distance.SolutionRepositoryN;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
 import id.my.dsm.routemate.data.repo.mapbox.MapboxDirectionsRouteRepository;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
 import id.my.dsm.routemate.data.repo.user.UserRepository;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
-import id.my.dsm.routemate.library.dsmlib.model.Location;
 import id.my.dsm.routemate.ui.fragment.viewmodel.mapsviewmodel.MapboxDirectionsRouteManager;
 import id.my.dsm.routemate.ui.fragment.viewmodel.mapsviewmodel.MarkerViewManagerModel;
 import id.my.dsm.routemate.ui.fragment.viewmodel.mapsviewmodel.SymbolManagerModel;
 import id.my.dsm.routemate.usecase.repository.AlterRepositoryUseCase;
+import id.my.dsm.vrpsolver.model.Location;
 
 // TODO: Hide directions route line
 // TODO: Global error message display
@@ -72,8 +71,7 @@ import id.my.dsm.routemate.usecase.repository.AlterRepositoryUseCase;
 public class MapsViewModel extends ViewModel implements
         OnMapReadyCallback,
         MapboxMap.OnMoveListener,
-        Style.OnStyleLoaded
-{
+        Style.OnStyleLoaded {
 
     private static final String TAG = "MapsViewModel";
 
@@ -83,7 +81,7 @@ public class MapsViewModel extends ViewModel implements
     @Inject
     PlaceRepositoryN placeRepository;
     @Inject
-    VehicleRepositoryN vehicleRepository;
+    FleetRepository vehicleRepository;
     @Inject
     DistanceRepositoryN distanceRepository;
     @Inject
@@ -105,8 +103,7 @@ public class MapsViewModel extends ViewModel implements
     private MarkerViewManager markerViewManager;
 
     // Extension classes
-//    @Inject
-    MapboxDirectionsRouteManager mapboxDirectionsRouteManager;
+    private MapboxDirectionsRouteManager mapboxDirectionsRouteManager;
 
     // Use cases
     @Inject
@@ -204,8 +201,7 @@ public class MapsViewModel extends ViewModel implements
         if (isTrafficStyleValue()) {
             styleDay = Style.TRAFFIC_DAY;
             styleNight = Style.TRAFFIC_NIGHT;
-        }
-        else {
+        } else {
             styleDay = Style.MAPBOX_STREETS;
             styleNight = Style.DARK;
         }
@@ -255,19 +251,10 @@ public class MapsViewModel extends ViewModel implements
     /**
      * Load cached directionsRoute from {@link MapboxDirectionsRouteRepository} if any.
      */
-    private void drawCachedDirectionsRoute() {
+    public void drawCachedDirectionsRoute() {
 
-        // TODO: When map reloads, previous cleared route still exists
-
-        mapboxDirectionsRouteManager.drawMapboxDirectionsRouteLines((ArrayList<MapboxDirectionsRoute>) mapboxDirectionsRouteRepository.getRecords());
-
-        // Draw directionsRouteLine based on the existing data in solutionRepository if any
-        /*if (solutionRepository.getDirectionsRouteCount() > 0) {
-            for (MatrixElement solution :  solutionRepository.getRecords()) {
-                drawDirectionsRouteLineFromSolution(solution);
-            }
-            Log.e(TAG, "drawCachedDirectionsRoute: " + "Directions Route drawn!");
-        }*/
+        Log.d(TAG, "drawCachedDirectionsRoute: Drawing cached directionsRouteLines for " + mapboxDirectionsRouteRepository.getRecordsCount());
+        mapboxDirectionsRouteManager.drawMapboxDirectionsRouteLines(mapboxDirectionsRouteRepository.getRecords());
 
     }
 
@@ -319,12 +306,14 @@ public class MapsViewModel extends ViewModel implements
 
     /**
      * Observable isMarkerInfoEnabled
+     *
      * @return observable boolean
      */
     @NonNull
     public LiveData<Boolean> isMarkerInfoEnabled() {
         return markerViewManagerModel.isMarkerInfoEnabled();
     }
+
     @NonNull
     public Boolean isMarkerInfoEnabledValue() {
         return markerViewManagerModel.isMarkerInfoEnabledValue();
@@ -332,6 +321,7 @@ public class MapsViewModel extends ViewModel implements
 
     /**
      * Observable isMarkerLockEnabled
+     *
      * @return observable boolean
      */
     @NonNull
@@ -341,12 +331,14 @@ public class MapsViewModel extends ViewModel implements
 
     /**
      * Observable isTrafficStyle
+     *
      * @return observable boolean
      */
     @NonNull
     public LiveData<Boolean> isTrafficStyle() {
         return isTrafficStyle;
     }
+
     @NonNull
     public Boolean isTrafficStyleValue() {
         return isTrafficStyle.getValue() != null ? isTrafficStyle.getValue() : false;
@@ -354,6 +346,7 @@ public class MapsViewModel extends ViewModel implements
 
     /**
      * Sets current place by finding the matching place from given symbol
+     *
      * @param symbol {@link Symbol}
      */
     public void setCurrentPlaceFromSymbol(@NonNull Symbol symbol) {
@@ -385,7 +378,13 @@ public class MapsViewModel extends ViewModel implements
     public void reloadMap() {
 
         cacheCameraPosition(); // Save last camera position
-        navController.navigate(R.id.action_basicMapsFragment_self);
+
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("redrawMapboxDirectionsRouteLines", true);
+
+        navController.navigate(R.id.action_basicMapsFragment_self, bundle);
+
+        Toast.makeText(context, "reloadMap executed on Thread: " + Thread.currentThread(), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -417,10 +416,13 @@ public class MapsViewModel extends ViewModel implements
 
         });
         mapboxMap.addOnMapLongClickListener(point -> {
-            Location.Profile mapboxProfile = placeRepository.getAutoProfile();
-            Place place = Place.Toolbox.createObjectiveFromMapboxLatLng(point, mapboxProfile);
+//            Location.Profile mapboxProfile = placeRepository.getAutoProfile();
+//            Place place = Place.Toolbox.createObjectiveFromMapboxLatLng(point, mapboxProfile);
+//
+//            alterRepositoryUseCase.invoke(OnRepositoryUpdate.Event.ACTION_CREATE, place, true);
 
-            alterRepositoryUseCase.invoke(OnRepositoryUpdate.Event.ACTION_CREATE, place, true);
+//            mapboxDirectionsRouteManager.clearMapboxDirectionsRouteLines(mapboxDirectionsRouteRepository.getRecords());
+
 
             return true;
         });
@@ -450,7 +452,6 @@ public class MapsViewModel extends ViewModel implements
 
         // Load cached data
         loadCachedCameraPosition(false);
-        drawCachedDirectionsRoute();
 
         // Listeners
         symbolManager.addClickListener(symbol -> {
@@ -519,7 +520,7 @@ public class MapsViewModel extends ViewModel implements
     /**
      * Initiate custom symbol icon resources for the map
      *
-     * @param style loaded style from mapbox
+     * @param style   loaded style from mapbox
      * @param context {@link MainActivity} instance
      */
     private void initCustomSymbolIcon(@NonNull Style style, @NonNull Context context) {
@@ -593,7 +594,7 @@ public class MapsViewModel extends ViewModel implements
     }
 
     // Subscribe to OnPlaceRepositoryUpdate event
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void _105705072022(@NonNull OnPlaceRepositoryUpdate event) {
 
         Place place = event.getObjective();
@@ -624,13 +625,16 @@ public class MapsViewModel extends ViewModel implements
         switch (event.getStatus()) {
 
             case RECORD_ADDED:
+                Log.d(TAG, "OnMapboxDirectionsRouteRepositoryUpdate: Drawing newly added MapboxDirectionsRouteLine");
                 mapboxDirectionsRouteManager.drawMapboxDirectionsRouteLine(mapboxDirectionsRoute);
                 break;
             case RECORD_DELETED:
                 // TODO
                 break;
             case RECORDS_CLEARED:
-                mapboxDirectionsRouteManager.clearMapboxDirectionsRouteLines(mapboxDirectionsRouteRepository.getRecords());
+//                Toast.makeText(context, "YES. DirectionsRoutes: " + mapboxDirectionsRouteRepository.getRecordsCount() + ". " + Thread.currentThread(), Toast.LENGTH_SHORT).show();
+//                reloadMap();
+//                mapboxDirectionsRouteManager.clearMapboxDirectionsRouteLines(mapboxDirectionsRouteRepository.getRecords());
                 break;
 
         }
@@ -642,6 +646,9 @@ public class MapsViewModel extends ViewModel implements
     public void _105705072022(@NonNull OnMapboxDirectionsRouteResponse event) {
 
         MapboxDirectionsRoute mapboxDirectionsRoute = event.getResponse();
+
+        Log.d(TAG, "OnMapboxDirectionsRouteResponse: mapboxDirectionsRoute received!");
+
         mapboxDirectionsRouteManager.createMapboxDirectionsRoute(mapboxDirectionsRoute);
 
         // From here after, MapboxDirectionsRoute ID is available due to createMapboxDirectionsRoute above
@@ -649,7 +656,7 @@ public class MapsViewModel extends ViewModel implements
     }
 
     // Subscribe to OnMapsViewModelRequest event
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void _031205062022(@NonNull OnMapsViewModelRequest event) {
 
         switch (event.getEvent()) {
@@ -659,6 +666,7 @@ public class MapsViewModel extends ViewModel implements
                 break;
             case ACTION_CLEAR_ROUTE_LINE:
                 // Used by OptimizationViewModel
+                Toast.makeText(context, "NO", Toast.LENGTH_SHORT).show();
                 mapboxDirectionsRouteManager.clearMapboxDirectionsRouteLines(event.getMapboxDirectionsRoutes());
                 break;
             case ACTION_RELOAD_MAP:
@@ -669,7 +677,7 @@ public class MapsViewModel extends ViewModel implements
                 mapboxDirectionsRouteManager.drawMapboxDirectionsRouteLines(event.getMapboxDirectionsRoutes());
                 break;
             case ACTION_DRAW_VEHICLE_ROUTE_LINE:
-                mapboxDirectionsRouteManager.drawMapboxDirectionsRouteLines(event.getMapboxDirectionsRoutes(), event.getVehicle());
+                mapboxDirectionsRouteManager.drawMapboxDirectionsRouteLines(event.getMapboxDirectionsRoutes(), event.getFleet());
                 break;
             case ACTION_RELOAD_PLACES_SYMBOL:
                 symbolManagerModel.recreatePlaceSymbols();

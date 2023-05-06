@@ -17,9 +17,9 @@ import com.google.android.material.card.MaterialCardView;
 import java.util.List;
 
 import id.my.dsm.routemate.R;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
+import id.my.dsm.vrpsolver.model.MatrixElement;
 
 public class DistanceRecViewAdapter extends RecyclerView.Adapter<DistanceRecViewAdapter.ViewHolder> {
 

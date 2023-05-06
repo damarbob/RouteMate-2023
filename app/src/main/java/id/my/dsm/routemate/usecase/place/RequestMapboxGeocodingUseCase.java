@@ -18,10 +18,10 @@ import java.util.List;
 import javax.inject.Inject;
 
 import id.my.dsm.routemate.data.event.network.OnMapboxGeocodingResponse;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.data.source.mapbox.MapboxDataSource;
-import id.my.dsm.routemate.library.dsmlib.model.Location;
-import id.my.dsm.routemate.library.dsmlib.model.LatLngAlt;
+import id.my.dsm.vrpsolver.model.LatLngAlt;
+import id.my.dsm.vrpsolver.model.Location;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

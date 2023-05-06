@@ -18,26 +18,26 @@ import java.text.NumberFormat;
 import java.util.List;
 
 import id.my.dsm.routemate.R;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.fleet.Fleet;
+import id.my.dsm.routemate.data.model.place.Place;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
-import id.my.dsm.routemate.library.dsmlib.model.Solution;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
 import id.my.dsm.routemate.ui.model.DistanceMeasurementUnit;
 import id.my.dsm.routemate.ui.model.MaterialManager;
 import id.my.dsm.routemate.ui.model.MeasurementConversion;
 import id.my.dsm.routemate.ui.model.RouteMatePref;
+import id.my.dsm.vrpsolver.model.Solution;
 
 public class SolutionRecViewAdapter extends RecyclerView.Adapter<SolutionRecViewAdapter.ViewHolder> {
 
     // Dependencies
     private List<Solution> objects;
     private final PlaceRepositoryN placeRepository;
-    private final VehicleRepositoryN vehicleRepository;
+    private final FleetRepository vehicleRepository;
     private final Activity activity;
     private DistanceMeasurementUnit distanceMeasurementUnit;
 
-    public SolutionRecViewAdapter(List<Solution> objects, PlaceRepositoryN placeRepository ,VehicleRepositoryN vehicleRepository, Activity activity, DistanceMeasurementUnit distanceMeasurementUnit) {
+    public SolutionRecViewAdapter(List<Solution> objects, PlaceRepositoryN placeRepository , FleetRepository vehicleRepository, Activity activity, DistanceMeasurementUnit distanceMeasurementUnit) {
         this.objects = objects;
         this.placeRepository = placeRepository;
         this.vehicleRepository = vehicleRepository;
@@ -74,7 +74,10 @@ public class SolutionRecViewAdapter extends RecyclerView.Adapter<SolutionRecView
 
         double dist = solution.getDistance(); // Get solution value
 
-        holder.textSolutionDestination.setText(destination.getName());
+        String originName = origin != null ? origin.getName() : "Missing Place";
+        String destName = destination != null ? destination.getName() : "Missing Place";
+
+        holder.textSolutionDestination.setText(destName);
 
         String formattedTravelDistance = null;
         int unitStringRes = R.string.measurement_kilometer;
@@ -99,9 +102,9 @@ public class SolutionRecViewAdapter extends RecyclerView.Adapter<SolutionRecView
 
         String vehicleName = "";
         if (solution.getVehicleId() != null) {
-            Vehicle vehicle = vehicleRepository.getVehicleById(solution.getVehicleId());
-            vehicleName = vehicle.getName();
-            int vehicleColor = vehicle.getColor();
+            Fleet fleet = vehicleRepository.getFleetById(solution.getVehicleId());
+            vehicleName = fleet.getName();
+            int vehicleColor = fleet.getColor();
             MaterialManager.setImageColor(holder.imageSolutionPreIcon, vehicleColor);
             MaterialManager.setImageColor(holder.imageSolutionPreLine, vehicleColor);
             MaterialManager.setImageColor(holder.imageSolutionLine, vehicleColor);
@@ -122,7 +125,7 @@ public class SolutionRecViewAdapter extends RecyclerView.Adapter<SolutionRecView
         // Position checking should be the last
         if (position == 0) {
             holder.layoutSolutionPreLine.setVisibility(VISIBLE); // Display pre line for the first solution (by default it's GONE)
-            holder.textSolutionStart.setText("Start at " + origin.getName());
+            holder.textSolutionStart.setText("Start at " + originName);
         }
         else {
             holder.layoutSolutionPreLine.setVisibility(GONE);
@@ -131,8 +134,8 @@ public class SolutionRecViewAdapter extends RecyclerView.Adapter<SolutionRecView
             if (prevSolution.getVehicleId() == null)
                 return;
 
-            String vehicle = vehicleRepository.getVehicleById(solution.getVehicleId()).getName();
-            String prevVehicle = vehicleRepository.getVehicleById(prevSolution.getVehicleId()).getName();
+            String vehicle = vehicleRepository.getFleetById(solution.getVehicleId()).getName();
+            String prevVehicle = vehicleRepository.getFleetById(prevSolution.getVehicleId()).getName();
 //            holder.textSolutionDebug.setText(vehicle + " | " + prevVehicle);
 
             if (solution.getVehicleId().equals(prevSolution.getVehicleId())) {
@@ -141,7 +144,7 @@ public class SolutionRecViewAdapter extends RecyclerView.Adapter<SolutionRecView
             else {
                 // Same as if position == 0 above
                 holder.layoutSolutionPreLine.setVisibility(VISIBLE);
-                holder.textSolutionStart.setText("Start at " + origin.getName());
+                holder.textSolutionStart.setText("Start at " + originName);
             }
 
             if (position < getObjects().size() - 1 - 1) {

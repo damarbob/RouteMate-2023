@@ -18,10 +18,10 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 import id.my.dsm.routemate.data.event.repo.OnDistanceRepositoryUpdate;
 import id.my.dsm.routemate.data.event.repo.OnRepositoryUpdate;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.data.repo.Repository;
-import id.my.dsm.routemate.library.dsmlib.model.Location;
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
+import id.my.dsm.vrpsolver.model.Location;
+import id.my.dsm.vrpsolver.model.MatrixElement;
 
 @Module
 @InstallIn(SingletonComponent.class)
@@ -141,10 +141,10 @@ public class DistanceRepositoryN extends Repository<MatrixElement> {
                     if (b <= a) {
                         // In effective mode, this helps fulfill the arraylist
                         for (int i = 0; i < distancesArray.size() - 1; i++) {
-                            if (distancesArray.get(i).getOrigin().equals(objTo.getDsmPlace()) &&
-                                    distancesArray.get(i).getDestination().equals(objFrom.getDsmPlace())) {
+                            if (distancesArray.get(i).getOrigin().equals(objTo.getLocation()) &&
+                                    distancesArray.get(i).getDestination().equals(objFrom.getLocation())) {
 
-                                MatrixElement matrixElement = new MatrixElement(objFrom.getDsmPlace(), objTo.getDsmPlace(), distancesArray.get(i).getDistance());
+                                MatrixElement matrixElement = new MatrixElement(objFrom.getLocation(), objTo.getLocation(), distancesArray.get(i).getDistance());
 
                                 distancesArray.add(
                                         matrixElement
@@ -157,7 +157,7 @@ public class DistanceRepositoryN extends Repository<MatrixElement> {
                 }
 
                 if (!(originIndex == destinationIndex)) {
-                    MatrixElement matrixElement = new MatrixElement(objFrom.getDsmPlace(), objTo.getDsmPlace(), calculateAirDistance(origin, destination));
+                    MatrixElement matrixElement = new MatrixElement(objFrom.getLocation(), objTo.getLocation(), calculateAirDistance(origin, destination));
                     distancesArray.add(matrixElement);
                 }
 

@@ -1,28 +1,26 @@
 package id.my.dsm.routemate.ui.fragment;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import org.greenrobot.eventbus.EventBus;
 
 import id.my.dsm.routemate.R;
 import id.my.dsm.routemate.data.event.viewmodel.OnMapsViewModelRequest;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.databinding.FragmentLocationBinding;
-import id.my.dsm.routemate.library.dsmlib.model.Location;
 import id.my.dsm.routemate.ui.fragment.viewmodel.LocationViewModel;
 import id.my.dsm.routemate.ui.fragment.viewmodel.MapsViewModel;
+import id.my.dsm.vrpsolver.model.Location;
 
 public class LocationFragment extends Fragment {
 
@@ -83,7 +81,7 @@ public class LocationFragment extends Fragment {
         binding.textLocationName.setText(place.getName());
         binding.textLocationProfile.setText(place.getLocalizedProfile(getResources()));
 
-        Location location = place.getDsmPlace();
+        Location location = place.getLocation();
 
         binding.textLocationLatValue.setText("" + location.getLatLngAlt().getAltitude());
         binding.textLocationLongValue.setText("" + location.getLatLngAlt().getLongitude());

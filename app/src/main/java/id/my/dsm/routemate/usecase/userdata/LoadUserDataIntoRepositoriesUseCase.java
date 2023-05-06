@@ -4,29 +4,30 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import id.my.dsm.routemate.data.model.fleet.Fleet;
 import id.my.dsm.routemate.data.model.maps.MapboxDirectionsRoute;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
 import id.my.dsm.routemate.data.repo.distance.SolutionRepositoryN;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
 import id.my.dsm.routemate.data.repo.mapbox.MapboxDirectionsRouteRepository;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
-import id.my.dsm.routemate.library.dsmlib.enums.OptimizationMethod;
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
-import id.my.dsm.routemate.library.dsmlib.model.Solution;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
+import id.my.dsm.vrpsolver.enums.OptimizationMethod;
+import id.my.dsm.vrpsolver.model.MatrixElement;
+import id.my.dsm.vrpsolver.model.Solution;
+import id.my.dsm.vrpsolver.model.Vehicle;
 
 public class LoadUserDataIntoRepositoriesUseCase {
 
     private static final String TAG = LoadUserDataIntoRepositoriesUseCase.class.getSimpleName();
     private final PlaceRepositoryN placeRepository;
-    private final VehicleRepositoryN vehicleRepository;
+    private final FleetRepository vehicleRepository;
     private final DistanceRepositoryN distanceRepository;
     private final SolutionRepositoryN solutionRepository;
     private final MapboxDirectionsRouteRepository mapboxDirectionsRouteRepository;
 
     @Inject
-    public LoadUserDataIntoRepositoriesUseCase(PlaceRepositoryN placeRepository, VehicleRepositoryN vehicleRepository, DistanceRepositoryN distanceRepository, SolutionRepositoryN solutionRepository, MapboxDirectionsRouteRepository mapboxDirectionsRouteRepository) {
+    public LoadUserDataIntoRepositoriesUseCase(PlaceRepositoryN placeRepository, FleetRepository vehicleRepository, DistanceRepositoryN distanceRepository, SolutionRepositoryN solutionRepository, MapboxDirectionsRouteRepository mapboxDirectionsRouteRepository) {
         this.placeRepository = placeRepository;
         this.vehicleRepository = vehicleRepository;
         this.distanceRepository = distanceRepository;
@@ -44,7 +45,7 @@ public class LoadUserDataIntoRepositoriesUseCase {
      */
     public void invoke(
             List<Place> places,
-            List<Vehicle> vehicles,
+            List<Fleet> vehicles,
             List<MatrixElement> matrix,
             List<Solution> solutions,
             List<MapboxDirectionsRoute> mapboxDirectionsRoutes,
@@ -76,12 +77,12 @@ public class LoadUserDataIntoRepositoriesUseCase {
                 for (Place p : places) {
 
                     // Replace origin
-                    if (p.getDsmPlace().getId().equals(d.getOrigin().getId()))
-                        d.setOrigin(p.getDsmPlace());
+                    if (p.getLocation().getId().equals(d.getOrigin().getId()))
+                        d.setOrigin(p.getLocation());
 
                     // Replace destination
-                    if (p.getDsmPlace().getId().equals(d.getDestination().getId()))
-                        d.setDestination(p.getDsmPlace());
+                    if (p.getLocation().getId().equals(d.getDestination().getId()))
+                        d.setDestination(p.getLocation());
 
                 }
 

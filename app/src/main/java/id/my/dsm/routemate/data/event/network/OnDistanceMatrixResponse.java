@@ -2,7 +2,7 @@ package id.my.dsm.routemate.data.event.network;
 
 import java.util.List;
 
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
+import id.my.dsm.vrpsolver.model.MatrixElement;
 
 public final class OnDistanceMatrixResponse {
 

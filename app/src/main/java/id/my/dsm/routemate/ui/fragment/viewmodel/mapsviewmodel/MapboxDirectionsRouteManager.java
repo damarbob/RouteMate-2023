@@ -23,12 +23,12 @@ import java.util.List;
 import javax.inject.Inject;
 
 import id.my.dsm.routemate.data.event.repo.OnRepositoryUpdate;
+import id.my.dsm.routemate.data.model.fleet.Fleet;
 import id.my.dsm.routemate.data.model.maps.MapboxDirectionsRoute;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
 import id.my.dsm.routemate.ui.fragment.viewmodel.MapsViewModel;
 import id.my.dsm.routemate.usecase.repository.AlterRepositoryUseCase;
+import id.my.dsm.vrpsolver.model.MatrixElement;
 
 public class MapboxDirectionsRouteManager {
 
@@ -42,7 +42,7 @@ public class MapboxDirectionsRouteManager {
     Style mapboxMapStyle;
 
     @Inject
-    VehicleRepositoryN vehicleRepository;
+    FleetRepository vehicleRepository;
 
     @Inject
     AlterRepositoryUseCase alterRepositoryUseCase;
@@ -61,6 +61,7 @@ public class MapboxDirectionsRouteManager {
     }
 
     public void createMapboxDirectionsRoute(MapboxDirectionsRoute mapboxDirectionsRoute) {
+        Log.d(TAG, "invoking ACTION_CREATE to AlterRepositoryUseCase for a new MapboxDirectionsRoute instance");
         alterRepositoryUseCase.invoke(OnRepositoryUpdate.Event.ACTION_CREATE, mapboxDirectionsRoute, false);
     }
 
@@ -73,13 +74,13 @@ public class MapboxDirectionsRouteManager {
         List<String> vehicleIds = mapboxDirectionsRoute.getVehicleIds();
         /*
             Set color to default if no vehicleIds found in the mapboxDirectionsRoute instance.
-            Otherwise, use the last vehicle color in the mapboxDirectionsRoute.
+            Otherwise, use the last fleet color in the mapboxDirectionsRoute.
          */
         assert vehicleIds != null;
-        Vehicle vehicle = vehicleRepository.getVehicleById(vehicleIds.get(vehicleIds.size() - 1));
-        assert vehicle != null; // Vehicle error if null
+        Fleet fleet = vehicleRepository.getFleetById(vehicleIds.get(vehicleIds.size() - 1));
+        assert fleet != null; // Vehicle error if null
 
-        int vehicleColor = vehicleIds.size() == 0 ? Vehicle.COLOR_DEFAULT : vehicle.getColor();
+        int vehicleColor = vehicleIds.size() == 0 ? Fleet.COLOR_DEFAULT : fleet.getColor();
 
         drawDirectionsRouteLine(mapboxDirectionsRoute, mapboxDirectionsRoute.getId(), vehicleColor);
 
@@ -90,25 +91,31 @@ public class MapboxDirectionsRouteManager {
     public void drawMapboxDirectionsRouteLines(@NonNull List<MapboxDirectionsRoute> mapboxDirectionsRoutes) {
 
         if (mapboxDirectionsRoutes.size() == 0)
-            Log.e(TAG, "drawMapboxDirectionsRouteLines: No directions route!");
+            Log.e(TAG, "drawMapboxDirectionsRouteLines: No directions route to draw!");
 
         for (MapboxDirectionsRoute m : mapboxDirectionsRoutes)
             drawMapboxDirectionsRouteLine(m);
     }
 
-    // Draw directionsRouteLines from selected vehicle only
-    public void drawMapboxDirectionsRouteLines(@NonNull List<MapboxDirectionsRoute> mapboxDirectionsRoutes, Vehicle vehicle) {
+    // Draw directionsRouteLines from selected fleet only
+    public void drawMapboxDirectionsRouteLines(@NonNull List<MapboxDirectionsRoute> mapboxDirectionsRoutes, Fleet fleet) {
         for (MapboxDirectionsRoute m : mapboxDirectionsRoutes)
-            if (m.getVehicleIds().contains(vehicle.getId()))
-                drawDirectionsRouteLine(m, m.getId(), vehicle.getColor());
+            if (m.getVehicleIds().contains(fleet.getId()))
+                drawDirectionsRouteLine(m, m.getId(), fleet.getColor());
     }
 
     public void clearMapboxDirectionsRouteLines(@NonNull List<MapboxDirectionsRoute> mapboxDirectionsRoutes) {
+        Log.d(TAG, "clearMapboxDirectionsRouteLines: Clearing mapboxDirectionsRoutes on the map... Count: " + mapboxDirectionsRoutes.size());
         for (MapboxDirectionsRoute m : mapboxDirectionsRoutes) {
+            Log.d(TAG, "clearMapboxDirectionsRouteLines: Clearing mapboxDirectionsRoutes ID: " + m.getId());
             mapboxMapStyle.removeLayer(m.getLineLayerId());
             mapboxMapStyle.removeSource(m.getStyleSourceId());
+            Log.d(TAG, "clearMapboxDirectionsRouteLines: Cleared " + m.getId());
         }
     }
+
+    public static final String MAPBOX_DIRECTIONS_LAYER_PREFIX = "DIRECTIONS_LAYER_";
+    public static final String MAPBOX_SOURCE_PREFIX = "SOURCE_ID_";
 
     /**
      * Draw directionsRouteLine from the given {@link MapboxDirectionsRoute} instance
@@ -118,8 +125,13 @@ public class MapboxDirectionsRouteManager {
      */
     public void drawDirectionsRouteLine(@NonNull MapboxDirectionsRoute mapboxDirectionsRoute, String id, int color) {
 
-        String layerId = "DIRECTIONS_LAYER_" + id;
-        String sourceId = "SOURCE_ID_" + id;
+        String layerId = MAPBOX_DIRECTIONS_LAYER_PREFIX + id;
+        String sourceId = MAPBOX_SOURCE_PREFIX + id;
+
+        if (mapboxMapStyle.getLayer(layerId) != null || mapboxMapStyle.getSource(sourceId) != null) {
+            Log.e(TAG, "drawDirectionsRouteLine: Layer and source for MapboxDirectionsRoute with ID " + id + " are already existed!");
+            return;
+        }
 
         Log.d(TAG, "drawDirectionsRouteLine: LayerID:" + layerId);
         Log.d(TAG, "drawDirectionsRouteLine: SourceID:" + sourceId);
@@ -138,7 +150,7 @@ public class MapboxDirectionsRouteManager {
         mapboxMapStyle.addLayerBelow(lineLayer, model.isTrafficStyleValue() ? LAYER_BELOW_ID_TRAFFIC : LAYER_BELOW_ID); // Add line layer below road label
 
         // TODO
-        lineLayer = (LineLayer) mapboxMapStyle.getLayer("DIRECTIONS_LAYER_" + id);
+        lineLayer = (LineLayer) mapboxMapStyle.getLayer(layerId);
         lineLayer.setProperties(PropertyFactory.lineColor(color));
 
         LineString lineString = LineString.fromPolyline(mapboxDirectionsRoute.getGeometry(), PRECISION_6);

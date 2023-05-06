@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import id.my.dsm.routemate.R;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
 
 public class BasicRecViewAdapter extends RecyclerView.Adapter<BasicRecViewAdapter.ViewHolder> {
 

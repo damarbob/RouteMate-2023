@@ -8,7 +8,7 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import id.my.dsm.routemate.R;
-import id.my.dsm.routemate.library.dsmlib.model.Solution;
+import id.my.dsm.vrpsolver.model.Solution;
 
 public class OnOptimizationResponse {
 

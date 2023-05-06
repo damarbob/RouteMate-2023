@@ -23,10 +23,10 @@ import id.my.dsm.routemate.data.model.user.DSMPlan;
 import id.my.dsm.routemate.data.model.user.DSMUser;
 import id.my.dsm.routemate.data.repo.user.UserRepository;
 import id.my.dsm.routemate.databinding.FragmentOptimizationSettingsBinding;
-import id.my.dsm.routemate.library.dsmlib.DSMSolver;
-import id.my.dsm.routemate.library.dsmlib.enums.DistancesMethod;
-import id.my.dsm.routemate.library.dsmlib.enums.OptimizationMethod;
 import id.my.dsm.routemate.ui.model.RouteMatePref;
+import id.my.dsm.vrpsolver.DSMSolver;
+import id.my.dsm.vrpsolver.enums.DistancesMethod;
+import id.my.dsm.vrpsolver.enums.OptimizationMethod;
 
 /**
  * A simple {@link Fragment} subclass.

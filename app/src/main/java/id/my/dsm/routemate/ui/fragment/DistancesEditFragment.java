@@ -14,8 +14,8 @@ import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
 import id.my.dsm.routemate.databinding.FragmentDistancesEditBinding;
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
 import id.my.dsm.routemate.usecase.userdata.UploadUserDataUseCase;
+import id.my.dsm.vrpsolver.model.MatrixElement;
 
 @AndroidEntryPoint
 public class DistancesEditFragment extends Fragment {

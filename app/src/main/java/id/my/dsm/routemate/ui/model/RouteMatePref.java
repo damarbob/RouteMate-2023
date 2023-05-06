@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import id.my.dsm.routemate.data.enums.MapsAPI;
-import id.my.dsm.routemate.library.dsmlib.enums.DistancesMethod;
-import id.my.dsm.routemate.library.dsmlib.enums.OptimizationMethod;
+import id.my.dsm.vrpsolver.enums.DistancesMethod;
+import id.my.dsm.vrpsolver.enums.OptimizationMethod;
 
 public class RouteMatePref {
 

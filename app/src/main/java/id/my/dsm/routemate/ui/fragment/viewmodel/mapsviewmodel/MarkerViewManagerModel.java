@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 
 import id.my.dsm.routemate.R;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
 
 public class MarkerViewManagerModel {

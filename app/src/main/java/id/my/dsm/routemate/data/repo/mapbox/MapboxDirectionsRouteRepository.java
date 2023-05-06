@@ -16,7 +16,6 @@ import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 import id.my.dsm.routemate.data.event.repo.OnMapboxDirectionsRouteRepositoryUpdate;
 import id.my.dsm.routemate.data.event.repo.OnRepositoryUpdate;
-import id.my.dsm.routemate.data.event.repo.OnSolutionRepositoryUpdate;
 import id.my.dsm.routemate.data.event.viewmodel.OnMapsViewModelRequest;
 import id.my.dsm.routemate.data.model.maps.MapboxDirectionsRoute;
 import id.my.dsm.routemate.data.repo.Repository;
@@ -25,7 +24,7 @@ import id.my.dsm.routemate.data.repo.Repository;
 @InstallIn(SingletonComponent.class)
 public class MapboxDirectionsRouteRepository extends Repository<MapboxDirectionsRoute> {
 
-    private static final String TAG = MapboxDirectionsRouteRepository.class.getName();
+    private static final String TAG = MapboxDirectionsRouteRepository.class.getSimpleName();
 
     @Singleton
     @Provides
@@ -46,12 +45,12 @@ public class MapboxDirectionsRouteRepository extends Repository<MapboxDirections
     @Override
     public void createRecord(MapboxDirectionsRoute record) {
 
-        String uUid = "MAPBOX_DIRECTIONS_ROUTE_" + UUID.randomUUID().toString(); // Create unique ID
+        String uUid = UUID.randomUUID().toString(); // Create unique ID
         record.setId(uUid); // Set unique ID
 
         addRecord(record);
 
-        Log.d(TAG, "createRecord: Record created with ID: " + record.getId());
+        Log.d(TAG, "createRecord: a new MapboxDirectionsRoute instance created with ID: " + record.getId());
 
     }
 
@@ -87,12 +86,24 @@ public class MapboxDirectionsRouteRepository extends Repository<MapboxDirections
     @Override
     public void clearRecord() {
         // Clear the route line first before clearing the repository
+        Log.d(TAG, "clearRecord in: sending OnMapsViewModelRequest ACTION_CLEAR_ROUTE_LINE for " + getRecords().size() + " records");
+
+        /*
+            Duplicate records to save temporarily for use to clear route line in MapViewModel
+            because right after the event dispatched, records get cleared.
+
+            So, by copying the records we give MapsViewModel access to the record's layer & source IDs
+            as deleting the DirectionsRoute on the map requires its layer and source ID.
+         */
+        List<MapboxDirectionsRoute> mapboxDirectionsRoutes = new ArrayList<>(getRecords());
+
         EventBus.getDefault().post(
                 new OnMapsViewModelRequest
                         .Builder(OnMapsViewModelRequest.Event.ACTION_CLEAR_ROUTE_LINE)
-                        .withMapboxDirectionsRoutes(getRecords())
+                        .withMapboxDirectionsRoutes(mapboxDirectionsRoutes)
                         .build()
         );
+
         super.clearRecord();
     }
 

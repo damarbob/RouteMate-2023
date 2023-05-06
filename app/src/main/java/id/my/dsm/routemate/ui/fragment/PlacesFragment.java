@@ -33,10 +33,9 @@ import id.my.dsm.routemate.R;
 import id.my.dsm.routemate.data.event.repo.OnPlaceRepositoryUpdate;
 import id.my.dsm.routemate.data.event.view.OnBottomSheetStateChanged;
 import id.my.dsm.routemate.data.event.view.OnMainActivityShowCaseRequest;
-import id.my.dsm.routemate.data.place.Place;
+import id.my.dsm.routemate.data.model.place.Place;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
 import id.my.dsm.routemate.databinding.FragmentPlacesBinding;
-import id.my.dsm.routemate.library.dsmlib.model.Location;
 import id.my.dsm.routemate.ui.fragment.dialog.QuickHelpFragment;
 import id.my.dsm.routemate.ui.fragment.viewmodel.MapsViewModel;
 import id.my.dsm.routemate.ui.fragment.viewmodel.PlacesViewModel;
@@ -45,6 +44,7 @@ import id.my.dsm.routemate.ui.model.OptionsMenu;
 import id.my.dsm.routemate.ui.model.RouteMatePref;
 import id.my.dsm.routemate.ui.recyclerview.PlaceRecViewAdapter;
 import id.my.dsm.routemate.usecase.repository.AlterRepositoryUseCase;
+import id.my.dsm.vrpsolver.model.Location;
 
 @AndroidEntryPoint
 public class
@@ -294,7 +294,7 @@ PlacesFragment extends Fragment {
 
         for (Place p : placeRepository.getRecords()) {
 
-            Location location = p.getDsmPlace();
+            Location location = p.getLocation();
 
             stringBuilder.append(location.getLatLngAlt().getLatitude());
             stringBuilder.append(",");

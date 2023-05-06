@@ -5,8 +5,8 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
-import id.my.dsm.routemate.library.dsmlib.model.MatrixElement;
-import id.my.dsm.routemate.library.dsmlib.model.Solution;
+import id.my.dsm.vrpsolver.model.MatrixElement;
+import id.my.dsm.vrpsolver.model.Solution;
 
 public final class OnSolutionRepositoryUpdate extends OnRepositoryUpdate<MatrixElement> {
 

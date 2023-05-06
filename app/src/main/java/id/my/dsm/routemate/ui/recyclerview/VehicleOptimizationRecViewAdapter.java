@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import id.my.dsm.routemate.R;
-import id.my.dsm.routemate.library.dsmlib.model.Vehicle;
+import id.my.dsm.routemate.data.model.fleet.Fleet;
 import id.my.dsm.routemate.usecase.repository.AlterRepositoryUseCase;
 
 public class VehicleOptimizationRecViewAdapter extends RecyclerView.Adapter<VehicleOptimizationRecViewAdapter.ViewHolder> {
@@ -22,15 +22,15 @@ public class VehicleOptimizationRecViewAdapter extends RecyclerView.Adapter<Vehi
     private static final String TAG = VehicleOptimizationRecViewAdapter.class.getName();
 
     // Dependencies
-    private final List<Vehicle> objects;
+    private final List<Fleet> fleets;
     private NavController navController;
     private Context context;
 
     // Use case
     private AlterRepositoryUseCase alterRepositoryUseCase;
 
-    public VehicleOptimizationRecViewAdapter(List<Vehicle> objects) {
-        this.objects = objects;
+    public VehicleOptimizationRecViewAdapter(List<Fleet> fleets) {
+        this.fleets = fleets;
     }
 
     @NonNull
@@ -48,7 +48,7 @@ public class VehicleOptimizationRecViewAdapter extends RecyclerView.Adapter<Vehi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         // Set the item's content matching the position/index here
-        Vehicle vehicle = objects.get(position);
+        Fleet vehicle = fleets.get(position);
 
         holder.textOptimizationList.setText(vehicle.getName());
 
@@ -56,7 +56,7 @@ public class VehicleOptimizationRecViewAdapter extends RecyclerView.Adapter<Vehi
 
     @Override
     public int getItemCount() {
-        return objects.size();
+        return fleets.size();
     }
 
     // ViewHolder can implements interface too

@@ -44,7 +44,7 @@ public class UserRepository {
 
     // Database keys
     private static final String PLACES_DB_KEY = "places";
-    private static final String VEHICLES_DB_KEY = "vehicles";
+    private static final String VEHICLES_DB_KEY = "fleets";
     private static final String MATRIX_DB_KEY = "matrix";
     private static final String SOLUTIONS_DB_KEY = "solutions";
     private static final String MAPBOX_DIRECTION_ROUTES_DB_KEY = "mapboxDirectionsRoutes";
@@ -183,7 +183,7 @@ public class UserRepository {
 
         if (
                 userData.getPlaces() == null &&
-                        userData.getVehicles() == null &&
+                        userData.getFleets() == null &&
                         userData.getMatrix() == null &&
                         userData.getSolutions() == null &&
                         userData.getMapboxDirectionsRoutes() == null
@@ -251,8 +251,8 @@ public class UserRepository {
 
                         if (userData.getPlaces() != null)
                             newDataHashMap.put(PLACES_DB_KEY, userData.getPlaces());
-                        if (userData.getVehicles() != null)
-                            newDataHashMap.put(VEHICLES_DB_KEY, userData.getVehicles());
+                        if (userData.getFleets() != null)
+                            newDataHashMap.put(VEHICLES_DB_KEY, userData.getFleets());
                         if (userData.getMatrix() != null)
                             newDataHashMap.put(MATRIX_DB_KEY, userData.getMatrix());
                         if (userData.getSolutions() != null)

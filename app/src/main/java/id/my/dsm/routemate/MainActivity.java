@@ -71,12 +71,12 @@ import id.my.dsm.routemate.data.model.user.DSMPlan;
 import id.my.dsm.routemate.data.model.user.DSMUser;
 import id.my.dsm.routemate.data.repo.distance.DistanceRepositoryN;
 import id.my.dsm.routemate.data.repo.distance.SolutionRepositoryN;
+import id.my.dsm.routemate.data.repo.fleet.FleetRepository;
 import id.my.dsm.routemate.data.repo.mapbox.MapboxDirectionsRouteRepository;
 import id.my.dsm.routemate.data.repo.place.PlaceRepositoryN;
 import id.my.dsm.routemate.data.repo.user.SessionRepository;
 import id.my.dsm.routemate.data.repo.user.UserRepository;
 import id.my.dsm.routemate.data.repo.user.UserStatus;
-import id.my.dsm.routemate.data.repo.vehicle.VehicleRepositoryN;
 import id.my.dsm.routemate.databinding.ActivityMainBinding;
 import id.my.dsm.routemate.ui.fragment.dialog.ApplicationSettingsFragment;
 import id.my.dsm.routemate.ui.fragment.viewmodel.DistancesViewModel;
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity
     @Inject
     PlaceRepositoryN placeRepository;
     @Inject
-    VehicleRepositoryN vehicleRepository;
+    FleetRepository vehicleRepository;
     @Inject
     DistanceRepositoryN distanceRepository;
     @Inject
@@ -130,8 +130,6 @@ public class MainActivity extends AppCompatActivity
     MapboxDirectionsRouteRepository mapboxDirectionsRouteRepository;
     private MapsViewModel mapsViewModel;
     private MainViewModel mainViewModel;
-    @Inject
-    BottomSheetMainCallback bottomSheetMainCallback;
     @Inject
     MapboxDirectionsRouteManager mapboxDirectionsRouteManager;
 
@@ -288,7 +286,34 @@ public class MainActivity extends AppCompatActivity
         bottomSheetBehavior = BottomSheetBehavior.from(binding.incBottomSheetMain.bottomSheetMain);
         bottomSheetBehavior.setFitToContents(false);
         bottomSheetBehavior.setHalfExpandedRatio(0.6f);
-        bottomSheetBehavior.addBottomSheetCallback(bottomSheetMainCallback);
+        bottomSheetBehavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+                        binding.appBarLayout.setExpanded(true);
+                        break;
+                    case BottomSheetBehavior.STATE_HALF_EXPANDED:
+                        binding.appBarLayout.setExpanded(true);
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+                        binding.appBarLayout.setExpanded(false);
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+                        break;
+                    case BottomSheetBehavior.STATE_HIDDEN:
+                        binding.appBarLayout.setExpanded(false);
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+                        break;
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
 
         // Observe state
         mapsViewModel.isMarkerInfoEnabled().observe(this, isMarkerInfoEnabled -> {
@@ -314,9 +339,7 @@ public class MainActivity extends AppCompatActivity
 
         // Set listeners
         binding.incBottomSheetMain.bottomSheetMain.setOnTouchListener((v, event) -> true);
-        binding.fabMainStartNavigationView.setOnClickListener(v -> {
-            binding.parentMainActivity.openDrawer(GravityCompat.START);
-        });
+        binding.fabMainStartNavigationView.setOnClickListener(v -> binding.parentMainActivity.openDrawer(GravityCompat.START));
         binding.fabMainDraw.setOnClickListener(v -> {
             DispatchViewStateEventUseCase.invoke(FAB_DRAW, !isDrawingMode ? OnViewStateChange.Event.STATE_ENABLED : OnViewStateChange.Event.STATE_DISABLED);
         });
@@ -351,12 +374,21 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onStart() {
+
         super.onStart();
 
         mapsViewModel.provideNavController(Navigation.findNavController(this, R.id.mapsFragmentContainer));
 
     }
 
+    @Override
+    protected void onStop() {
+
+        EventBus.getDefault().unregister(this);
+
+        super.onStop();
+
+    }
 
 
     /**
@@ -389,7 +421,6 @@ public class MainActivity extends AppCompatActivity
         /*
             All static variables should be set null here if needed to prevent huge memory leaks
          */
-        EventBus.getDefault().unregister(this);
         placeRepository.onDestroy();
         vehicleRepository.onDestroy();
         distanceRepository.onDestroy();
@@ -451,46 +482,9 @@ public class MainActivity extends AppCompatActivity
     // Event listeners
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
-    public void _04062023(OnBottomSheetStateChanged event) {
-        switch (event.getState()) {
-            case BottomSheetBehavior.STATE_COLLAPSED:
-                binding.appBarLayout.setExpanded(true);
-                break;
-            case BottomSheetBehavior.STATE_HALF_EXPANDED:
-                binding.appBarLayout.setExpanded(true);
-                break;
-            case BottomSheetBehavior.STATE_EXPANDED:
-                binding.appBarLayout.setExpanded(false);
-                break;
-            case BottomSheetBehavior.STATE_SETTLING:
-                break;
-            case BottomSheetBehavior.STATE_HIDDEN:
-                binding.appBarLayout.setExpanded(false);
-                break;
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void _OnUserStateChanged(OnUserStatusChangedEvent event) {
 
         UserStatus status = event.getUserStatus();
-
-//        if (status == OFFLINE) {
-//            new MaterialAlertDialogBuilder(this)
-//                    .setTitle("Offline")
-//                    .setMessage("You are offline, some application functionalities may not work correctly. Please restore the internet connection.")
-//                    .setNeutralButton("Cancel", null)
-//                    .show();
-//            return;
-//        }
-//        else if (status == ONLINE) {
-//            new MaterialAlertDialogBuilder(this)
-//                    .setTitle("Online")
-//                    .setMessage("Connection restored.")
-//                    .setNeutralButton("Cancel", null)
-//                    .show();
-//            return;
-//        }
 
         boolean isUnauthorized =
                 (status == UNAUTHORIZED) || (status == SIGN_IN_FAILURE) || (status == SIGNUP_FAILURE) || (status == UPDATE_USER_FAILURE) || (status == INSERT_RECORD_FAILURE);
@@ -506,7 +500,6 @@ public class MainActivity extends AppCompatActivity
 
         if (status == SIGN_IN_SUCCESS) {
             retrieveDSMUserUseCase.invoke(); // Related to user's plan
-            retrieveUserDataUseCase.invoke();
         }
 
     }
@@ -514,7 +507,30 @@ public class MainActivity extends AppCompatActivity
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void _OnMapStyleLoadedEvent(OnMapStyleLoadedEvent event) {
 
+        /*
+            Wait until maps finished loaded its style,
+            then setup UI behavior for buttons
+         */
         setupCoordinatorBehavior(); // Set up view behaviors
+
+        /*
+            Retrieve user data from server if the userData has not yet
+            loaded to repositories.
+
+            UserData must be loaded after Map's Style Loaded because
+            retrieveUserDataUseCase involves loadIntoRepositories
+            and then triggers a sequence of map UI events like placing
+            symbols, drawing routes, etc. If the userData retrieved before
+            the map ready, the app crashes.
+         */
+        boolean isUserDataLoaded = placeRepository.getRecordsCount() != 0 ||
+                vehicleRepository.getRecordsCount() > 1 ||
+                solutionRepository.getRecordsCount() != 0 ||
+                distanceRepository.getRecordsCount() != 0;
+
+        if (!isUserDataLoaded)
+            retrieveUserDataUseCase.invoke();
+
 
     }
 
@@ -574,6 +590,14 @@ public class MainActivity extends AppCompatActivity
 
     @Subscribe(threadMode = ThreadMode.POSTING)
     public void _031205062022(@NonNull OnOptimizationUpdate event) {
+
+        /*
+            Happens when all optimization process is done including distance matrix calculation
+            and directions request.
+
+            Sync all data to the server.
+         */
+
         // Sync data to cloud
         uploadUserDataUseCase.invoke(true, true, true, true, true);
     }
@@ -805,41 +829,5 @@ public class MainActivity extends AppCompatActivity
             }
 
         }
-    }
-}
-
-class BottomSheetMainCallback extends BottomSheetBehavior.BottomSheetCallback {
-
-    @Inject
-    public BottomSheetMainCallback() {
-    }
-
-    @Override
-    public void onStateChanged(@NonNull View bottomSheet, int newState) {
-        EventBus.getDefault().post(new OnBottomSheetStateChanged(newState));
-        String a = "";
-        switch (newState) {
-            case BottomSheetBehavior.STATE_COLLAPSED:
-                a = "STATE_COLLAPSED";
-                break;
-            case BottomSheetBehavior.STATE_HALF_EXPANDED:
-                a = "STATE_HALF_EXPANDED";
-                break;
-            case BottomSheetBehavior.STATE_EXPANDED:
-                a = "STATE_EXPANDED";
-                break;
-            case BottomSheetBehavior.STATE_SETTLING:
-                a = "STATE_SETTLING";
-                break;
-            case BottomSheetBehavior.STATE_HIDDEN:
-                a = "STATE_HIDDEN";
-                break;
-        }
-        Log.e("BottomSheet", "State: " + a);
-    }
-
-    @Override
-    public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-
     }
 }
