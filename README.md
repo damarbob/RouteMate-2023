@@ -32,7 +32,7 @@ pk.
 - Optionally, you can restrict the API only for Distance Matrix API
 
 ### 3. Setting up Firebase
-- Sign in to [Firebase Console](https://https://console.firebase.google.com/)
+- Sign in to [Firebase Console](https://console.firebase.google.com/)
 - Create a new project (optionally, you can link the previous Google Cloud project)
 - Add an Android app and follow the instructions carefully (setup instructions are provided by Firebase)
 
